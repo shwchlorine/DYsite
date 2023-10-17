@@ -30,7 +30,7 @@ export const projectData: ProjectT[] = [
         description: 'BingX is a global digital asset, spot, and derivatives trading platform that provides a user-centric and open ecosystem with intuitive social trading features.',
         links: [
             {
-                link: 'bingx.com',
+                link: 'https://bingx.com',
                 icon: <FiLink />
             }
         ],
