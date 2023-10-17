@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/DYsite/static/css/main.3787962c.css",
-    "main.js": "/DYsite/static/js/main.c74b7f64.js",
+    "main.js": "/DYsite/static/js/main.21afa95b.js",
     "static/js/422.3e49d6bc.chunk.js": "/DYsite/static/js/422.3e49d6bc.chunk.js",
     "static/js/578.03f8f892.chunk.js": "/DYsite/static/js/578.03f8f892.chunk.js",
     "static/js/718.addd8d5e.chunk.js": "/DYsite/static/js/718.addd8d5e.chunk.js",
@@ -79,10 +79,10 @@
     "static/media/linky.md": "/DYsite/static/media/linky.f56455433636236fb7a2.md",
     "static/media/blogging-application.md": "/DYsite/static/media/blogging-application.ec1f0c3f666adc0fdc2f.md",
     "main.3787962c.css.map": "/DYsite/static/css/main.3787962c.css.map",
-    "main.c74b7f64.js.map": "/DYsite/static/js/main.c74b7f64.js.map"
+    "main.21afa95b.js.map": "/DYsite/static/js/main.21afa95b.js.map"
   },
   "entrypoints": [
     "static/css/main.3787962c.css",
-    "static/js/main.c74b7f64.js"
+    "static/js/main.21afa95b.js"
   ]
 }
