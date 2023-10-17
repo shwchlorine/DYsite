@@ -17,7 +17,7 @@ const Resume: FC = () => {
                     </Fade>
                     <Container>
                         <Fade cascade>
-                            <iframe src="https://drive.google.com/file/d/1D_CRQLavab1_ue3S26icUss1OkMG0gIC/preview" width="100%" height="480" allow="autoplay" title="Jason Wang Resume"></iframe>
+                            <iframe src="https://drive.google.com/file/d/1D_CRQLavab1_ue3S26icUss1OkMG0gIC/preview" width="100%" height="480" allow="autoplay" title="Derrick Yen Resume"></iframe>
                         </Fade>
                     </Container>
                 </VStack>

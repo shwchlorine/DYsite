@@ -7,7 +7,7 @@ import {
     Flex,
     Badge,
     Text,
-    Spacer,
+
     Box,
     useColorModeValue
 } from '@chakra-ui/react';

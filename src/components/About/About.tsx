@@ -8,8 +8,7 @@ import {
     Text,
     useColorModeValue,
     Flex,
-    Center,
-    Link
+    Center
 } from '@chakra-ui/react';
 import { Element } from 'react-scroll';
 import {Fade} from 'react-awesome-reveal';

@@ -84,7 +84,7 @@ const Nav: FC = () => {
                             to={'home'}
                             onClose={onClose}
                         >
-                            {/* <Box fontWeight={600}>Jason Wang</Box> */}
+                            {/* <Box fontWeight={600}>Derrick Yen</Box> */}
                             <Text fontWeight={600}>Derrick Yen</Text>
                         </NavLink>
                     </Flex>
