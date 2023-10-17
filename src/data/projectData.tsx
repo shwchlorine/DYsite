@@ -75,7 +75,7 @@ export const projectData: ProjectT[] = [
         type: 'Oct 2019 - Aug 2019',
         tagline: 'Consultant',
  
-        imageSrc: 'nyc skline.jpg',
+        imageSrc: 'nyc skyline.jpg',
         description: 'Baronford & Associates is a consultancy firm focused on digital transformation, supply chain management, and facilitating strategic investments for startups in the global market.',
     },
     {
