@@ -14,8 +14,7 @@ import {Fade} from 'react-awesome-reveal';
 import LinkIconButton from './LinkIconButton';
 import { projectData } from '../../data/projectData';
 
-const Scroll = require('react-scroll');
-const scroll = Scroll.animateScroll;
+
 
 
 const Projects: FC = () => {
