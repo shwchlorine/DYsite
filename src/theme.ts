@@ -3,7 +3,7 @@
 import { extendTheme } from '@chakra-ui/react'
 
 const config = extendTheme({
-    initialColorMode: 'default',
+    initialColorMode: 'dark',
     useSystemColorMode: false,
 })
 
@@ -11,8 +11,8 @@ const customTheme = extendTheme({
     semanticTokens: {
         colors: {
             bg: {
-                default: '#1E2428',
-                _dark: '#ECEFF4'
+                default: '#ECEFF4',
+                _dark: '#1E2428'
             }
         }
     },
