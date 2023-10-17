@@ -10,28 +10,25 @@ import {
 } from '@chakra-ui/react'
 import {
     SiFlask,
-    SiHtml5,
+ 
     SiJava,
     SiPhp,
     SiPython,
     SiReact,
     SiTypescript,
-    SiBootstrap,
+
     SiMysql,
     SiMongodb,
-    SiVisualstudiocode,
+
     SiGit,
     SiLatex,
-    SiDocker,
-    SiGo,
+
+
     SiNodedotjs,
     SiPostgresql,
-    SiC,
-    SiFirebase,
-    SiCsharp,
+
     SiDotnet,
-    SiAmazonaws,
-    SiTailwindcss,
+
     SiChakraui
 } from 'react-icons/si';
 import { Element } from 'react-scroll';

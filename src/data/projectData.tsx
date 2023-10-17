@@ -1,15 +1,5 @@
-import {
-    FirebaseBadge,
-    JavaBadge,
-    MongoBadge,
-    MySQLBadge,
-    NodeBadge,
-    PHPBadge,
-    PythonBadge,
-    ReactBadge,
-    AssemblyBadge
-} from '../components/Projects/TechBadges';
-import { FiGithub, FiLink } from 'react-icons/fi';
+
+import { FiLink } from 'react-icons/fi';
 import { ReactElement } from 'react';
 
 export interface LinkT {

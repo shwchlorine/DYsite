@@ -2,7 +2,6 @@ import { HStack, Link } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import {
     FiLinkedin,
-    FiGithub,
     FiMail
 } from 'react-icons/fi'
 
