@@ -28,7 +28,7 @@ const BackButton = () => {
                 icon={<ArrowBackIcon/>}
                 aria-label='Back to homepage'
                 variant={'outline'}
-                colorScheme={'teal'}
+                colorScheme={'purple'}
                 bg={['rgba(154, 228, 217, 0.2)', 'none']}
                 borderRadius={'full'}
                 border={'2px'}
