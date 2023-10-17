@@ -5,17 +5,17 @@ Styles for displaying markdown
     all: revert;
 }
 .markdown a {
-    color: rgb(142, 209, 199);
-    border-bottom: 2px solid rgb(142, 209, 199);
+    color: rgb(173, 70, 165);
+    border-bottom: 2px solid rgb(173, 70, 165);
     transition: 0.4s;
 }
 .markdown a:hover {
-    color: rgb(126, 171, 165);
+    color: rgb(173, 70, 165);
 }
 /* 
 Styles for displaying active scroll spy links
 */
 .active {
     transition: 0.3s;
-    border-bottom: 2px solid rgb(154, 228, 217);
+    border-bottom: 2px solid rgb(173, 70, 165);
 }
