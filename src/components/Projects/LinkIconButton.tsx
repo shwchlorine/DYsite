@@ -11,7 +11,7 @@ const LinkIconButton: FC<LinkIconButtonProps> = (props) => {
         <Link href={props.href} isExternal>
             <IconButton
                 variant={'outline'}
-                colorScheme={'cyan'}
+                colorScheme={'purple'}
                 aria-label={'View project'}
                 fontSize={'1rem'}
                 size={'sm'}

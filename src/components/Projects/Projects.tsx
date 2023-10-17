@@ -26,7 +26,7 @@ const Projects: FC = () => {
             <Container maxW={'10xl'} p={6.75} mt={20} mb={[10, 20]} px={[0, 10]}>
                 <VStack spacing={8}>
                     <Fade>
-                        <Heading as='h2'>Featured Projects</Heading>
+                        <Heading as='h2'>Experience</Heading>
                     </Fade>
                     <Wrap spacing='20px' justify='center'>
                         {
@@ -52,19 +52,7 @@ const Projects: FC = () => {
                         }
 
                     </Wrap>
-                    
-                    <Link to={'/projects'}>
-                        <Button
-                            variant={'solid'}
-                            colorScheme={'teal'}
-                            size={'lg'}
-                            onClick={() => {
-                                scroll.scrollToTop({ duration: 450 })
-                            }}
-                        >
-                            View All
-                        </Button>
-                    </Link>
+                
                 </VStack>
             </Container>
         </Element>

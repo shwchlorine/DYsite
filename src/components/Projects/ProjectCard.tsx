@@ -57,7 +57,7 @@ const ProjectCard: FC<ProjectCardProps> = (props) => {
                 </Box>
                 <Stack>
                     <Text
-                        color={'blue.200'}
+                        color={'purple.200'}
                         textTransform={'uppercase'}
                         fontWeight={800}
                         fontSize={'sm'}
@@ -93,7 +93,7 @@ const ProjectCard: FC<ProjectCardProps> = (props) => {
                         >
                             <Button
                                 variant={'outline'}
-                                colorScheme={'cyan'}
+                                colorScheme={'purple'}
                                 aria-label={`Read more about ${props.name}`}
                                 fontSize={'1rem'}
                                 size={'sm'}

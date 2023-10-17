@@ -31,143 +31,77 @@ export interface ProjectT {
 
 export const projectData: ProjectT[] = [
     {
-        name: 'Street Savvy',
+        name: 'BingX Exchange',
         id: 'street-savvy',
-        type: 'Web app',
-        tagline: 'Suggests places to visit tailored using your preferences',
-        tags: [<ReactBadge />, <FirebaseBadge />, <PythonBadge />],
-        imageSrc: '/street-savvy.jpg',
-        description: 'A web app that suggests places to visit in Toronto based on your preferences using a custom recommendation engine and data from the Google Places API. Submitted to UofTHacks X.',
+        type: '2023-Present',
+        tagline: 'Business Development Executive',
+      
+        imageSrc: '/Bingx.png',
+        description: 'BingX is a global digital asset, spot, and derivatives trading platform that provides a user-centric and open ecosystem with intuitive social trading features.',
         links: [
             {
-                link: 'https://github.com/jasonfyw/street-savvy',
-                icon: <FiGithub />
+                link: 'bingx.com',
+                icon: <FiLink />
             }
         ],
-        headerLink: 'https://github.com/jasonfyw/street-savvy'
+        headerLink: 'https://bingx.com'
     },
     {
-        name: 'Twitter Geo-Sentiment',
+        name: 'DigiWorld',
         id: 'twitter-geo-sentiment',
-        type: 'Web app',
-        tagline: 'Analyse and visualise regional sentiment on Twitter',
-        tags: [<PythonBadge />, <ReactBadge />, <MongoBadge />],
-        imageSrc: '/twitter-geo-sentiment.jpg',
-        description: 'A web tool allowing queries analysing and visualising regional sentiment towards given topics on Twitter during a specific time frame. A custom-trained Naive Bayes model is used to perform sentiment analysis on aggregated data.',
+        type: '2022-Present',
+        tagline: 'Product Manager',
+       
+        imageSrc: '/Digiworld.png',
+        description: 'Digiworld is a pioneering Web3 platform that establishes partnerships with diverse projects, curates a unique NFT collection, and manages a consortium of crypto investors.',
         links: [
             {
-                link: 'https://github.com/jasonfyw/twitter-geo-sentiment',
-                icon: <FiGithub />
+                link: 'https://opensea.io/assets/ethereum/0x46fde27b3c65143e7670729517051d7f6dadcaf7/1',
+                icon: <FiLink />
             }
         ],
-        headerLink: 'https://github.com/jasonfyw/twitter-geo-sentiment'
+        headerLink: 'https://opensea.io/assets/ethereum/0x46fde27b3c65143e7670729517051d7f6dadcaf7/1'
     },
     {
-        name: 'Fourier Series Animation',
+        name: 'Wonghaus Ventures',
         id: 'fourier-series',
-        type: 'Web app',
-        tagline: 'Demonstrating the Fourier series by approximating user-inputted line drawings',
-        tags: [<ReactBadge />],
-        imageSrc: '/fourier-series.png',
-        description: 'An interactive React web app that demonstrates how an arbitrary user-inputted line drawing can be approximated using the Fourier series. Animations are rendered by the P5 library using efficiently implemented computations.',
+        type: 'E-Commerce',
+        tagline: 'Product Manager',
+      
+        imageSrc: '/Wonghaus.png',
+        description: 'Wonghaus Ventures is a digital strategy firm specializing in affiliate marketing, e-commerce community building, and providing startups with comprehensive e-commerce and digital marketing solutions.',
         links: [
             {
-                link: 'https://github.com/jasonfyw/fourier-series',
-                icon: <FiGithub />
-            },
-            {
-                link: 'https://jasonfyw.com/fourier-series/',
+                link: 'https://www.bbclass.co/',
                 icon: <FiLink />
             }
+            
         ],
-        headerLink: 'https://jasonfyw.com/fourier-series/'
+        headerLink: 'https://www.bbclass.co/'
     },
     {
-        name: 'Orbital Simulation',
+        name: 'Baronford & Associates',
         id: 'orbital-sim',
-        type: 'Physics simulation',
-        tagline: 'A PyGame simulation accurately modelling planetary orbits in space',
-        tags: [<PythonBadge />],
+        type: 'Oct 2019 - Aug 2019',
+        tagline: 'Consultant',
+ 
         imageSrc: '/orbital-sim.png',
-        description: 'An implementation of Newtonian physics in PyGame using positional data from the JPL Horizons database to simulate and record data on the past and future movements of celestial bodies in our solar system and beyond.',
-        links: [
-            {
-                link: 'https://github.com/jasonfyw/orbital-sim',
-                icon: <FiGithub />
-            }
-        ],
-        headerLink: 'https://github.com/jasonfyw/orbital-sim'
+        description: 'Baronford & Associates is a consultancy firm focused on digital transformation, supply chain management, and facilitating strategic investments for startups in the global market.',
     },
     {
-        name: 'PLISMUN',
+        name: 'New Omni Bank',
         id: 'plismun',
-        type: 'Website',
-        tagline: 'The official website for PLISMUN',
-        tags: [<PHPBadge />, <MySQLBadge />],
-        imageSrc: '/plismun.jpg',
-        description: 'A platform for my high school\'s annual international MUN conference, built from the ground up providing a delegate application system, admin tools, analytics, and resource hub. It managed hundreds of users from dozens of countries.',
+        type: 'May 2019 - Aug 2019',
+        tagline: 'Summer Analyst',
+
+        imageSrc: 'New omni.jpg',
+        description: 'New Omni Bank is a financial institution specializing in digital and mobile banking solutions, catering to both US and China markets with an emphasis on cross-platform integrations.',
         links: [
             {
-                link: 'https://github.com/jasonfyw/plismun',
-                icon: <FiGithub />
-            },
-            {
-                link: 'https://plismun.com',
+                link: 'https://www.newomnibank.com/',
                 icon: <FiLink />
             }
         ],
-        headerLink: 'https://plismun.com'
+        headerLink: 'https://www.newomnibank.com/'
     },
-    {
-        name: 'Linky',
-        id: 'linky',
-        type: 'Web app',
-        tagline: 'A modern, lightweight link shortener',
-        tags: [<ReactBadge />, <NodeBadge />, <MongoBadge />],
-        imageSrc: '/linky.png',
-        description: 'A lightweight and simple to use link shortener web app with a NodeJS REST API and a frontend built with ChakraUI. Features additional functions like QR codes and alternative URL formats.',
-        links: [
-            {
-                link: 'https://github.com/jasonfyw/linky',
-                icon: <FiGithub />
-            },
-            {
-                link: 'https://lnky.to',
-                icon: <FiLink />
-            }
-        ],
-        headerLink: 'https://lnky.to'
-    },
-    {
-        name: 'Blogging Application',
-        id: 'blogging-app',
-        type: 'Web app',
-        tagline: 'Java blogging application built using CLEAN architecture and SOLID principles',
-        tags: [<JavaBadge />],
-        imageSrc: '/blogging-app.jpg',
-        description: 'Our group project for CSC207 - a blogging website where users can post text content and follow other accounts. Designed and built according to CLEAN architecture and SOLID principles.',
-        links: [
-            {
-                link: 'https://github.com/jasonfyw/csc207-blogging-app',
-                icon: <FiGithub />
-            }
-        ],
-        headerLink: 'https://github.com/jasonfyw/csc207-blogging-app'
-    },
-    {
-        name: 'Breakout in MIPS',
-        id: 'breakout-asm',
-        type: 'Game',
-        tagline: 'Atari Breakout implemented in MIPS Assembly for CSC258',
-        tags: [<AssemblyBadge />],
-        imageSrc: '/breakout-asm.png',
-        description: 'Using MIPS Assembly to implement an Atari Breakout clone with features such as game controls, multiple lives, displaying score, and more.',
-        links: [
-            {
-                link: 'https://github.com/jasonfyw/csc258-project',
-                icon: <FiGithub />
-            }
-        ],
-        headerLink: 'https://github.com/jasonfyw/csc258-project'
-    }
 ]

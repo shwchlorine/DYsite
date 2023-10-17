@@ -35,15 +35,14 @@ const About: FC = () => {
                                 <Flex>
                                     <Center p={4}>👋🏼</Center>
                                     <Text>
-                                        Hi, I'm Jason and I'm a third year co-op student at the <b>University of Toronto</b> with a passion for <b>Software Engineering</b> and all things technology!
-                                    </Text>
+                                    Hi, I'm Derrick, a Product Manager with a background in business development and a knack for scaling operations in the digital realm. My journey has exposed me to diverse industries and challenges, shaping my approach to modern business solutions.                                    </Text>
                                 </Flex>
                             </Fade>
                             <Fade bottom cascade duration={500}>
                                 <Flex>
                                     <Center p={4}>🎓</Center>
                                     <Text>
-                                        I'm pursuing an HBSc with a <b>Specialist in Computer Science (ASIP co-op)</b> and <b>Major in Cognitive Science</b>, graduating class of 2025.
+                                    I'm actively searching for a product-based role in NYC, and eager to apply my technical expertise and robust digital strategy background to drive transformative solutions
                                     </Text>
                                 </Flex>
                             </Fade>
@@ -51,7 +50,7 @@ const About: FC = () => {
                                 <Flex>
                                     <Center p={4}>👨🏻‍💻</Center>
                                     <Text>
-                                        Over the course of Summer 2023, I was a <b>Software Engineering Intern at NerveX</b> working in full-stack development. I am currently seeking an internship starting Summer 2024!
+                                    After graduating, I founded <b>DigiWorld</b> and am currently working as Business Development Executive at BingX Exchange. 
                                     </Text>
                                 </Flex>
                             </Fade>
@@ -59,31 +58,11 @@ const About: FC = () => {
                                 <Flex>
                                     <Center p={4}>🚀</Center>
                                     <Text>
-                                        I'm experienced in full-stack web development - particularly with <b>Typescript</b> and <b>Python</b>. <b>ReactJS</b> is my frontend tool of choice and I've worked in backend with <b>NodeJS, .NET Core, Java, Python,</b> and <b>Golang</b>. 
+                                        In my professional journey, I've honed skills in tools such as <b>No-code platforms</b> (Figma/Webflow/Bubble), <b>CRM Platforms</b> (Salesforce/Pipedrive), as well as <b>Product Roadmapping</b>. These tools, coupled with my understanding of digital trends, have been essential in formulating strategies and executing them efficiently. While I've been fortunate to see positive outcomes, I always believe there's room for growth and new learning experiences. 
                                     </Text>
                                 </Flex>
                             </Fade>
-                            <Fade bottom cascade duration={500}>
-                                <Flex>
-                                    <Center p={4}>🧠</Center>
-                                    <Text>
-                                        In addition to Software Engineering, I am also interested in the confluence of artificial intelligence and cognitive science, as well as photography! Check out my&nbsp;
-                                        <Link
-                                            href="https://photo.jasonfyw.com"
-                                            isExternal
-                                            fontWeight={'semibold'}
-                                            borderBottom={'2px solid rgb(154, 228, 217)'}
-                                            transition={'0.2s'}
-                                            _hover={{
-                                                textDecor: 'none',
-                                                opacity: 0.9
-                                            }}
-                                        >
-                                            photography portfolio to learn more about my creative work.
-                                        </Link>.
-                                    </Text>
-                                </Flex>
-                            </Fade>
+                           
                         </VStack>
                     </Stack>
                 </VStack>

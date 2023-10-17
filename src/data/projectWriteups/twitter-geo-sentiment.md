@@ -1,18 +1,20 @@
-twitter-geo-sentiment is a web app built with a ReactJS interface connected to a RESTful Flask API to analyse the sentiment of collected geo-tagged tweets, providing data visualisation based upon the collated data.
+- Performed cold outreach through social media and calls with a 45% conversion rate
+ 
+- Establishing partnerships with 30+ Web3 projects for cross-community growth and benefits
 
-The Twitter Search API is used to collect the most recent tweets based on given keywords by location. A naive-bayes sentiment classifier trained on tweets determines the sentiment of individual tweets, which are then aggregated to provide a mean sentiment for a region. A React frontend receives all this and provides data visualisations illustrating sentiment regarding a specific topic across states or countries.
+- Created Digiworld Pass NFT Collection (sold out in 24 hours @ 1.1 ETH average price)
 
-This project was part of the submission for my IB Computer Science Internal Assessment.
+- Leading crypto/NFT research & investment committee to generate alpha calls ($2.5M+ in earnings)
 
-## Tech stack
+- Managing private consortium of Web3/crypto investors (limited access with 800+ waitlist)
 
-### Frontend
+- Expanding & engaging with 10K Discord/Twitter followers through influencer/social media marketing 
 
-- **ReactJS** styled with styled-components and Bootstrap
+## Skills Used
 
-### Backend
-
-- **Python (Flask)** for the API
-- **Scikit-learn** and **NLTK** for training the sentiment analysis model
-- **MongoDB** for storing query history
-- **Twitter API** for data
+- **Webflow** 
+- **Figma**
+- **Notion**  
+- **Google Analytics** 
+- **SQL** 
+- **Salesorce**

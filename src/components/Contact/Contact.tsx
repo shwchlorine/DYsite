@@ -36,16 +36,9 @@ const Contact: FC = () => {
                         >
                             <Flex textAlign={'center'}>
                                 <Container w='50%'>
-                                    <Link href="mailto:jason@jasonfyw.com">
+                                    <Link href="mailto:dyen2018@gmail.com">
                                         <Badge colorScheme='green'>Personal</Badge>
-                                        <Text textDecoration={'underline'}>jason@jasonfyw.com</Text>
-                                    </Link>
-                                </Container>
-                                <Spacer />
-                                <Container w='50%'>
-                                    <Link href="mailto:jsn.wang@mail.utoronto.ca">
-                                        <Badge colorScheme='orange'>Academic</Badge>
-                                        <Text textDecoration={'underline'}>jsn.wang@mail.utoronto.ca</Text>
+                                        <Text textDecoration={'underline'}>dyen2018@gmail.com</Text>
                                     </Link>
                                 </Container>
                             </Flex>
