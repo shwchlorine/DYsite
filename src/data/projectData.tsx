@@ -26,7 +26,7 @@ export const projectData: ProjectT[] = [
         type: '2023-Present',
         tagline: 'Business Development Executive',
       
-        imageSrc: '/Bingx.jpg',
+        imageSrc: '/Bingx.png',
         description: 'BingX is a global digital asset, spot, and derivatives trading platform that provides a user-centric and open ecosystem with intuitive social trading features.',
         links: [
             {
@@ -42,7 +42,7 @@ export const projectData: ProjectT[] = [
         type: '2022-Present',
         tagline: 'Product Manager',
        
-        imageSrc: '/Digiworld.jpg',
+        imageSrc: '/Digiworld.png',
         description: 'Digiworld is a pioneering Web3 platform that establishes partnerships with diverse projects, curates a unique NFT collection, and manages a consortium of crypto investors.',
         links: [
             {
@@ -58,7 +58,7 @@ export const projectData: ProjectT[] = [
         type: 'E-Commerce',
         tagline: 'Product Manager',
       
-        imageSrc: '/Wonghaus.jpg',
+        imageSrc: '/Wonghaus.png',
         description: 'Wonghaus Ventures is a digital strategy firm specializing in affiliate marketing, e-commerce community building, and providing startups with comprehensive e-commerce and digital marketing solutions.',
         links: [
             {
