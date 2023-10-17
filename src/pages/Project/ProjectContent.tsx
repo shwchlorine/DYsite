@@ -86,7 +86,7 @@ const ProjectContent = (props: ProjectContentProps) => {
                     </Breadcrumb>
 
                     <Text
-                        color={'blue.200'}
+                        color={'purple.200'}
                         textTransform={'uppercase'}
                         fontWeight={800}
                         fontSize={'sm'}
@@ -109,7 +109,7 @@ const ProjectContent = (props: ProjectContentProps) => {
                         {projectData['links']?.map((link, i) => (
                             <LinkBox key={i}>
                                 <LinkOverlay href={link.link} isExternal>
-                                    <Button rightIcon={link.icon} colorScheme='teal' variant='outline'>
+                                    <Button rightIcon={link.icon} colorScheme='purple' variant='outline'>
                                         {
                                             link.icon.type === FiGithub ? 'View code' : 'Visit'
                                         }
