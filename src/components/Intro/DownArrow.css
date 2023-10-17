@@ -9,7 +9,7 @@
 }
 
 .arrows path {
-    stroke: rgba(175, 234, 247, 0.9);
+    stroke: rgba(173, 70, 165, 0.9);
     fill: transparent;
     stroke-width: 2px;
     animation: arrow 2s infinite;
