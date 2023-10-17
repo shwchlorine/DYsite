@@ -12,7 +12,7 @@ import {
     Link
 } from '@chakra-ui/react';
 import { Element } from 'react-scroll';
-import Fade from 'react-reveal/Fade';
+import {Fade} from 'react-awesome-reveal';
 import headshot from '../../media/headshot.jpg'
 
 const About: FC = () => {
@@ -31,14 +31,14 @@ const About: FC = () => {
                             border={`3px solid ${useColorModeValue('#1E2428', '#ECEFF4')}`}
                         />
                         <VStack spacing={4} p={[10, 4]} pl={[10, 50]}>
-                            <Fade bottom cascade duration={500}>
+                            <Fade cascade duration={500}>
                                 <Flex>
                                     <Center p={4}>👋🏼</Center>
                                     <Text>
                                     Hi, I'm Derrick, a Product Manager with a background in business development and a knack for scaling operations in the digital realm. My journey has exposed me to diverse industries and challenges, shaping my approach to modern business solutions.                                    </Text>
                                 </Flex>
                             </Fade>
-                            <Fade bottom cascade duration={500}>
+                            <Fade cascade duration={500}>
                                 <Flex>
                                     <Center p={4}>🎓</Center>
                                     <Text>
@@ -46,7 +46,7 @@ const About: FC = () => {
                                     </Text>
                                 </Flex>
                             </Fade>
-                            <Fade bottom cascade duration={500}>
+                            <Fade cascade duration={500}>
                                 <Flex>
                                     <Center p={4}>👨🏻‍💻</Center>
                                     <Text>
@@ -54,7 +54,7 @@ const About: FC = () => {
                                     </Text>
                                 </Flex>
                             </Fade>
-                            <Fade bottom cascade duration={500}>
+                            <Fade cascade duration={500}>
                                 <Flex>
                                     <Center p={4}>🚀</Center>
                                     <Text>

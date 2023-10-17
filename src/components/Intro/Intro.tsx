@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import ParticlesBg from 'particles-bg';
 import ReactTypingEffect from 'react-typing-effect';
-import Fade from 'react-reveal/Fade';
+import {Fade} from 'react-awesome-reveal';
 import Socials from '../global/Socials';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Element } from 'react-scroll';
@@ -34,7 +34,7 @@ const Intro: FC = () => {
                     <HStack spacing={6}>
                         {['US'].map((c) => <Heading fontSize={'1.75rem'}>{c}</Heading>)}
                     </HStack>
-                    <Fade bottom cascade>
+                    <Fade cascade>
                         <Text
                             fontSize={'1.5rem'}
                             fontWeight={300}

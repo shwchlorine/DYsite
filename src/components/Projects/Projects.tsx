@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import ProjectCard from './ProjectCard';
 import { Element } from 'react-scroll';
-import Fade from 'react-reveal/Fade';
+import {Fade} from 'react-awesome-reveal';
 import LinkIconButton from './LinkIconButton';
 import { projectData } from '../../data/projectData';
 import { Link } from 'react-router-dom';

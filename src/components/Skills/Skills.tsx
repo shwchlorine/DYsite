@@ -35,7 +35,7 @@ import {
     SiChakraui
 } from 'react-icons/si';
 import { Element } from 'react-scroll';
-import Fade from 'react-reveal/Fade';
+import {Fade} from 'react-awesome-reveal';
 import SkillSection from './SkillSection';
 import SkillItem from './SkillItem';
 
@@ -47,7 +47,7 @@ const Skills: FC = () => {
                     <Fade>
                         <Heading as='h2'>Skills</Heading>
                     </Fade>
-                    <Fade bottom cascade duration={500}>
+                    <Fade cascade duration={500}>
                         <Box>
                             <Stack direction={'row'}>
                                 <Stack

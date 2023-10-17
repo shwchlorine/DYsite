@@ -12,8 +12,8 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 import { Element } from 'react-scroll';
-import Flip from 'react-reveal/Flip';
-import Fade from 'react-reveal/Fade';
+import {Fade,Flip} from 'react-awesome-reveal';
+
 
 const Contact: FC = () => {
     return (
@@ -23,7 +23,7 @@ const Contact: FC = () => {
                     <Fade>
                         <Heading as='h2'>Contact me</Heading>
                     </Fade>
-                    <Flip bottom>
+                    <Flip>
                         <Box
                             maxW={'85vw'}
                             w={'xl'}
