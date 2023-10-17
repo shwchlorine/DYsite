@@ -5,7 +5,7 @@ import {
     Heading,
     Wrap,
     WrapItem,
-
+    Button,
     useMediaQuery
 } from '@chakra-ui/react';
 import ProjectCard from './ProjectCard';
@@ -13,7 +13,9 @@ import { Element } from 'react-scroll';
 import {Fade} from 'react-awesome-reveal';
 import LinkIconButton from './LinkIconButton';
 import { projectData } from '../../data/projectData';
-
+import { Link } from 'react-router-dom';
+const Scroll = require('react-scroll');
+const scroll = Scroll.animateScroll;
 
 
 
@@ -49,9 +51,20 @@ const Projects: FC = () => {
                                 </WrapItem>
                             ))
                         }
-
-                    </Wrap>
-                
+                            
+                            </Wrap>
+                    <Link to={'/projects'}>
+                        <Button
+                            variant={'solid'}
+                            colorScheme={'purple'}
+                            size={'lg'}
+                            onClick={() => {
+                                scroll.scrollToTop({ duration: 450 })
+                            }}
+                        >
+                            View All
+                        </Button>
+                    </Link>
                 </VStack>
             </Container>
         </Element>
