@@ -2,13 +2,13 @@ import { FC } from 'react';
 import {
     Box,
     Text,
-    Icon,
+
     useColorModeValue,
     Flex,
     Spacer,
     IconButton
 } from '@chakra-ui/react';
-import { FaHeart } from 'react-icons/fa';
+
 import Socials from '../global/Socials';
 import { ChevronUpIcon } from '@chakra-ui/icons';
 const Scroll = require('react-scroll');
