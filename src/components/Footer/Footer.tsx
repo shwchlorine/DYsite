@@ -19,7 +19,7 @@ const Footer: FC = () => {
         <Box w={'100%'} p={'2rem'} mt={20} bg={useColorModeValue('gray.100', 'gray.900')} textAlign='left'>
             <Flex alignItems={'center'} px={2}>
                 <Text mr={2}>
-                    © {new Date().getFullYear()} Derrick Yen – made with &nbsp;<Icon as={FaHeart} fontSize={'0.65rem'} color={'#BF616A'} />&nbsp; using ReactJS 
+                    © {new Date().getFullYear()} Derrick Yen – made ReactJS
                 </Text>
                 <Spacer/>
                 <Socials color={useColorModeValue('#5a657c', '#9199a9')} size='1.25rem' />
