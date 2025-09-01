@@ -20,10 +20,26 @@ export interface ProjectT {
 }
 
 export const projectData: ProjectT[] = [
+     {
+        name: 'Alchemy',
+        id: 'plismun',
+        type: '2024-Present',
+        tagline: 'Summer Analyst',
+
+        imageSrc: 'New omni.jpg',
+        description: 'Alchemy is a Web3 development platform providing blockchain infrastructure and tools, enabling teams to build, scale, and manage decentralized applications across global networks.',
+        links: [
+            {
+                link: 'https://www.alchemy.com/',
+                icon: <FiLink />
+            }
+        ],
+        headerLink: 'https://www.alchemy.com/'
+    },
     {
         name: 'BingX Exchange',
         id: 'street-savvy',
-        type: '2023-Present',
+        type: '2023-2024',
         tagline: 'Business Development Executive',
       
         imageSrc: 'Bingx.png',
@@ -77,21 +93,5 @@ export const projectData: ProjectT[] = [
  
         imageSrc: 'Nycskyline.jpg',
         description: 'Baronford & Associates is a consultancy firm focused on digital transformation, supply chain management, and facilitating strategic investments for startups in the global market.',
-    },
-    {
-        name: 'New Omni Bank',
-        id: 'plismun',
-        type: 'May 2019 - Aug 2019',
-        tagline: 'Summer Analyst',
-
-        imageSrc: 'New omni.jpg',
-        description: 'New Omni Bank is a financial institution specializing in digital and mobile banking solutions, catering to both US and China markets with an emphasis on cross-platform integrations.',
-        links: [
-            {
-                link: 'https://www.newomnibank.com/',
-                icon: <FiLink />
-            }
-        ],
-        headerLink: 'https://www.newomnibank.com/'
     },
 ]
