@@ -24,7 +24,7 @@ export const projectData: ProjectT[] = [
         name: 'Alchemy',
         id: 'plismun',
         type: '2024-Present',
-        tagline: 'Summer Analyst',
+        tagline: 'SDR Team Lead',
 
         imageSrc: 'alchemy.png',
         description: 'Alchemy is a Web3 development platform providing blockchain infrastructure and tools, enabling teams to build, scale, and manage decentralized applications across global networks.',
