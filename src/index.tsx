@@ -13,8 +13,10 @@ const root = ReactDOM.createRoot(container)
 root.render(
     <React.StrictMode>
         <HashRouter>
-            <ColorModeScript />
-            <App />
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+            <ChakraProvider theme={theme}>
+                <App />
+            </ChakraProvider>
         </HashRouter>
     </React.StrictMode>,
 )
