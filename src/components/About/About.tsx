@@ -34,7 +34,7 @@ const About: FC = () => {
                                 <Flex>
                                     <Center p={4}>👋🏼</Center>
                                     <Text>
-                                    Hi, I'm Derrick, a Product Manager with a background in business development and a knack for scaling operations in the digital realm. My journey has exposed me to diverse industries and challenges, shaping my approach to modern business solutions.                                    </Text>
+                                    Hi, I'm Derrick, a Web3 enthusiast with a background in business development and a knack for scaling operations in the digital realm. My journey has exposed me to diverse industries and challenges, shaping my approach to modern business solutions.                                    </Text>
                                 </Flex>
                             </Fade>
                             <Fade cascade duration={500}>
