@@ -7,7 +7,7 @@
 - Building relationships with leading protocols: Hyperliquid Foundation, Monad Foundation, Phantom, Tensor Labs
 
 **Skills**
-- **Microsoft Office**
-- **Microsoft Excel** 
-- **Financial Analysis**
-- **Accounting**
+- **Salesforce**
+- **Prompt Engineering** 
+- **Pocus**
+- **Apollo**
