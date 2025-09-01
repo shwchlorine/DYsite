@@ -49,7 +49,7 @@ const Intro: FC = () => {
                         </Box>
                     </Fade>
                     <Link
-                        href={'https://drive.google.com/file/d/1D_CRQLavab1_ue3S26icUss1OkMG0gIC/preview'}
+                        href={'https://drive.google.com/file/d/10kcEgHC3trXnWRKB4ypr8Z1-wcb5sMbI/preview'}
                         isExternal
                         _hover={{ 'textDecor': 'none' }}
                     >
