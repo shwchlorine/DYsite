@@ -55,7 +55,7 @@ export const projectData: ProjectT[] = [
     {
         name: 'DigiWorld',
         id: 'twitter-geo-sentiment',
-        type: '2022-Present',
+        type: '2022-2024',
         tagline: 'Product Manager',
        
         imageSrc: 'Digiworld.png',
@@ -71,7 +71,7 @@ export const projectData: ProjectT[] = [
     {
         name: 'Wonghaus Ventures',
         id: 'fourier-series',
-        type: 'E-Commerce',
+        type: '2021-2021',
         tagline: 'Product Manager',
       
         imageSrc: 'Wonghaus.png',
@@ -88,7 +88,7 @@ export const projectData: ProjectT[] = [
     {
         name: 'Baronford & Associates',
         id: 'orbital-sim',
-        type: 'Oct 2019 - Aug 2019',
+        type: '2019-2022',
         tagline: 'Consultant',
  
         imageSrc: 'Nycskyline.jpg',
