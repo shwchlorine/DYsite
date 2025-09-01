@@ -41,7 +41,7 @@ const About: FC = () => {
                                 <Flex>
                                     <Center p={4}>🎓</Center>
                                     <Text>
-                                    I'm actively searching for a product-based role in NYC, and eager to apply my technical expertise and robust digital strategy background to drive transformative solutions
+                                    I'm actively searching for a sales-based role in NYC, and eager to apply my technical expertise and robust digital strategy background to drive transformative solutions
                                     </Text>
                                 </Flex>
                             </Fade>
