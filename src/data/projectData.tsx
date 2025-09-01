@@ -26,7 +26,7 @@ export const projectData: ProjectT[] = [
         type: '2024-Present',
         tagline: 'Summer Analyst',
 
-        imageSrc: 'New omni.jpg',
+        imageSrc: 'alchemy.png',
         description: 'Alchemy is a Web3 development platform providing blockchain infrastructure and tools, enabling teams to build, scale, and manage decentralized applications across global networks.',
         links: [
             {
