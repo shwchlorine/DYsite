@@ -45,6 +45,29 @@
 
         gtag('config', 'G-5PZG2MPRV4');
     </script>
+    <script>
+        setTimeout(() => {
+            let counter = 0;
+            const favicon = document.querySelector("link[rel='icon']");
+            const frames = Array.from({ length: 10 }, (_, i) => `%PUBLIC_URL%/pikachu${i + 1}.png`);
+            const loadedFrames = [];
+
+            // Preload images
+            frames.forEach((src, idx) => {
+                const img = new Image();
+                img.onload = () => loadedFrames[idx] = img.src;
+                img.src = src;
+            });
+
+            // Animate favicon
+            setInterval(() => {
+                if (loadedFrames[counter]) {
+                    favicon.href = loadedFrames[counter];
+                }
+                counter = (counter + 1) % loadedFrames.length;
+            }, 150); // adjust speed (ms) here
+        }, 1000); // initial delay (ms)
+    </script>
 </head>
 
 <body>
