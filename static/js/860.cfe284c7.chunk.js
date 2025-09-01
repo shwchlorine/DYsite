@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkshwchlorine_github_io=self.webpackChunkshwchlorine_github_io||[]).push([[860],{860:function(i,e,s){i.exports=s.p+"static/media/plismun.3f787271223536e0c9d0.md"}}]);
