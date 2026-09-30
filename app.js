@@ -440,8 +440,12 @@ document.addEventListener('keydown', e => {
     if (finishTyping) { finishTyping(); return; }
     if (advance) { const a = advance; advance = null; a(); }
   }
-  // pack sentences into text-box sized pages
-  function pages(str, max = 130) {
+  // pack sentences into pages that fit the three-line text box
+  function pages(str) {
+    const fsz = parseFloat(getComputedStyle(textBox).fontSize) || 16;
+    const inner = textBox.clientWidth - fsz * 2.2;
+    const perLine = Math.max(20, Math.floor(inner / (fsz * 0.56)));
+    const max = perLine * 3 - 6;
     const out = [];
     let cur = '';
     for (const sentence of str.split(/(?<=[.!?])\s+/)) {

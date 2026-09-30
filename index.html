@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./styles.css?v=12" />
+<link rel="stylesheet" href="./styles.css?v=16" />
 <link rel="icon" href="./favicon.ico" />
 </head>
 <body>
@@ -69,6 +69,16 @@
                 <stop offset="0.6" stop-color="#f3e9ff"/>
                 <stop offset="1" stop-color="#b98cff"/>
               </radialGradient>
+              <linearGradient id="mbBeamG" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                <stop offset="0.5" stop-color="#efe3ff" stop-opacity="0.45"/>
+                <stop offset="1" stop-color="#e3d2ff" stop-opacity="0"/>
+              </linearGradient>
+              <radialGradient id="mbUnderG" cx="50%" cy="40%" r="60%">
+                <stop offset="0" stop-color="#e9e2f5"/>
+                <stop offset="0.7" stop-color="#b9b0cc"/>
+                <stop offset="1" stop-color="#7d7394"/>
+              </radialGradient>
               <clipPath id="mbTopClip"><rect x="0" y="0" width="200" height="100"/></clipPath>
               <clipPath id="mbBotClip"><rect x="0" y="100" width="200" height="100"/></clipPath>
             </defs>
@@ -79,15 +89,20 @@
               <path d="M 6 100 A 94 94 0 0 0 194 100" fill="none" stroke="#1c1924" stroke-width="6"/>
               <rect x="6" y="100" width="188" height="9" fill="#1c1924"/>
             </g>
-            <!-- glow inside, revealed when the top flips open -->
-            <ellipse id="mbInner" cx="100" cy="100" rx="86" ry="16" fill="url(#mbInnerG)"/>
-            <!-- top half: hinged at the back-right of the band -->
+            <!-- the opening: rim, inner glow, and a beam of light (only while open) -->
+            <g class="mb-open-only">
+              <path d="M 24 101 L -20 -60 L 220 -60 L 176 101 Z" fill="url(#mbBeamG)"/>
+              <ellipse cx="100" cy="101" rx="90" ry="17" fill="#1c1924"/>
+              <ellipse cx="100" cy="102" rx="83" ry="12.5" fill="url(#mbInnerG)"/>
+            </g>
+            <!-- top half: lifts and tilts back on its rear hinge -->
             <g id="mbTop" class="mb-top">
+              <ellipse class="mb-open-only" cx="100" cy="100" rx="93" ry="18" fill="url(#mbUnderG)" stroke="#1c1924" stroke-width="4"/>
               <circle cx="100" cy="100" r="94" fill="url(#mbTopG)" clip-path="url(#mbTopClip)"/>
               <circle cx="46" cy="66" r="21" fill="url(#mbPinkG)" stroke="#1c1924" stroke-width="3"/>
               <circle cx="154" cy="66" r="21" fill="url(#mbPinkG)" stroke="#1c1924" stroke-width="3"/>
-              <path d="M 76 80 L 83 40 L 100 62 L 117 40 L 124 80" fill="none" stroke="#fff" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
-              <ellipse cx="66" cy="38" rx="30" ry="13" fill="#fff" opacity="0.32" transform="rotate(-28 66 38)"/>
+              <path d="M 89 38 L 89 66 L 99 66 Q 115 66 115 52 Q 115 38 99 38 Z" fill="none" stroke="#fff" stroke-width="7.5" stroke-linejoin="round" stroke-linecap="round"/>
+              <ellipse cx="56" cy="32" rx="24" ry="10" fill="#fff" opacity="0.3" transform="rotate(-32 56 32)"/>
               <path d="M 6 100 A 94 94 0 0 1 194 100" fill="none" stroke="#1c1924" stroke-width="6"/>
               <rect x="6" y="91" width="188" height="9" fill="#1c1924"/>
             </g>
@@ -330,7 +345,7 @@
         <svg viewBox="0 0 40 40">
           <path d="M 2 20 A 18 18 0 0 1 38 20 Z" fill="#7b3fd6"/>
           <circle cx="11" cy="11" r="4" fill="#e45bc9"/><circle cx="29" cy="11" r="4" fill="#e45bc9"/>
-          <path d="M 13 17 L 15 9 L 20 14 L 25 9 L 27 17" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M 16 9 L 16 17 L 19.5 17 Q 25 17 25 13 Q 25 9 19.5 9 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
           <path d="M 2 20 A 18 18 0 0 0 38 20 Z" fill="#f4f3f6"/>
           <circle cx="20" cy="20" r="18" fill="none" stroke="#1c1924" stroke-width="2.5"/>
           <path d="M 2 20 L 38 20" stroke="#1c1924" stroke-width="3"/>
@@ -370,6 +385,6 @@
   <button type="button" class="bt-close" id="btClose" aria-label="Close battle">✕</button>
 </dialog>
 
-<script src="./app.js?v=12" defer></script>
+<script src="./app.js?v=16" defer></script>
 </body>
 </html>
