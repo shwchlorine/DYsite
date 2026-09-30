@@ -613,7 +613,7 @@ document.addEventListener('keydown', e => {
   }
 
   // Every catch ends by closing the battle back into the Master Ball. With
-  // exit (RUN / ✕ / Esc) it skips the stat line and closes after "Gotcha!".
+  // exit (RUN / ✕ / Esc) it closes on its own shortly after "Gotcha!".
   // Returns false because the battle is over (or was closed part-way).
   let catching = false, exitAfterCatch = false;
   async function catchQuota(alive, exit = false) {
@@ -703,11 +703,6 @@ document.addEventListener('keydown', e => {
     }
     await say('Gotcha! QUOTA was caught!');
     if (!alive()) return false;
-    const stat = [...document.querySelectorAll('.hero .ticker .tick')]
-      .map(t => t.textContent.replace(/\s+/g, ' ').trim())
-      .find(t => /quota/i.test(t));
-    if (stat) { await say(`${stat}.`); if (!alive()) return false; }
-
     // caught: the battle folds back into the Master Ball
     close();
     return false;
