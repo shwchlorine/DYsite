@@ -144,16 +144,7 @@ document.addEventListener('keydown', e => {
     const vh = H + Math.max(0, rect.top + window.scrollY); // viewport-ish height
     const cx = W / 2;
     HOOK = Math.max(36, Math.min(90, vh * 0.085));
-    // hang the sleeve so its bottom covers the top ~70% of the name's
-    // capitals (Fraunces: cap top ≈ line top + 0.05em, cap height ≈ 0.7em)
-    const name = stage.querySelector('.name-behind');
     let jy = vh * 0.25 - stageTop;
-    if (name) {
-      const fs = parseFloat(getComputedStyle(name).fontSize);
-      const capTop = name.getBoundingClientRect().top - rect.top + fs * 0.05;
-      const wantBottom = capTop + fs * 0.7 * 0.72;
-      jy = Math.max(jy, wantBottom - bh + holeY - HOOK);
-    }
     jy = Math.max(40, Math.min(jy, H - bh - HOOK - 20));
     // straps cross the top edge of the page ~6% either side of centre,
     // and the anchors sit further up the same lines, off-screen
@@ -164,6 +155,16 @@ document.addEventListener('keydown', e => {
     AR = { x: cx + spread, y: ay };
     ropeLen = Math.hypot(spread, jy - ay);
     place(cx, jy);
+
+    // line the giant name up with the middle of the card at rest
+    // (Fraunces capitals: top ≈ line top + 0.05em, height ≈ 0.7em → centre ≈ +0.4em)
+    const name = stage.querySelector('.name-behind');
+    if (name) {
+      const fs = parseFloat(getComputedStyle(name).fontSize);
+      const cardMid = jy + HOOK - holeY + bh / 2;
+      name.style.top = `${Math.round(cardMid - fs * 0.4)}px`;
+      name.style.bottom = 'auto';
+    }
   }
 
   // ── constraints ──
