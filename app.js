@@ -108,7 +108,7 @@ document.addEventListener('keydown', e => {
 
   let W = 0, R = 0, floor = 0, fs = 0;
   let x = 0, y = 0, vx = 0, vy = 0, a = 0, av = 0, squash = 0;
-  let onFloor = false, still = 0, nextWiggle = 1.4;
+  let onFloor = false, still = 0, nextWiggle = 0.8;
   let state = 'idle';          // idle | drag | open
   let wiggle = null;           // { t, i }
   let drag = null, dragMoved = 0, dragged = false;
@@ -126,7 +126,12 @@ document.addEventListener('keydown', e => {
     // name's capitals start ~60% down the screen, clear of the intro text
     const intro = stage.querySelector('.intro');
     const introBottom = intro ? intro.offsetTop + intro.offsetHeight : 0;
-    let capTop = vh * 0.6 - stageTop;
+    // "Derrick Yen" has no descenders, so the hero can end just under the
+    // baseline; lift the name if needed so the ticker fits on the first screen
+    const gap = fs * 0.08;
+    const ticker = document.querySelector('.hero .ticker');
+    const tickerBlock = ticker ? ticker.offsetHeight + parseFloat(getComputedStyle(ticker).marginTop) : 0;
+    let capTop = Math.min(vh * 0.6 - stageTop, vh - stageTop - capH - gap - tickerBlock - 12);
     // the ball sits in front of the top third of the capitals
     floor = capTop + capH * 0.33;
     if (floor - 2 * R < introBottom + 24) {
@@ -135,8 +140,7 @@ document.addEventListener('keydown', e => {
     }
     name.style.top = `${Math.round(capTop - fs * 0.05)}px`;
     name.style.bottom = 'auto';
-    // end the hero just under the name's descenders
-    stage.style.height = `${Math.round(capTop + fs * 0.98 + vh * 0.05)}px`;
+    stage.style.height = `${Math.round(capTop + capH + gap)}px`;
 
     if (first) {
       x = W / 2;
@@ -213,7 +217,7 @@ document.addEventListener('keydown', e => {
     light.classList.remove('burst');
     state = 'idle';
     still = 0;
-    nextWiggle = 2.5;
+    nextWiggle = 1.2;
     if (!reduceMotion) { vy = -650; onFloor = false; }
   });
 
@@ -269,7 +273,7 @@ document.addEventListener('keydown', e => {
 
     // idle capture wiggle: three wobbles, then the button blinks
     if (state === 'idle' && onFloor && !reduceMotion) {
-      const settled = vx === 0 && Math.abs(av) < 0.25 && Math.abs(wrap(a)) < 0.04;
+      const settled = vx === 0 && Math.abs(av) < 0.6 && Math.abs(wrap(a)) < 0.08;
       if (wiggle) {
         wiggle.t += dt;
         const kicks = [0, 0.95, 1.9];
@@ -282,7 +286,7 @@ document.addEventListener('keydown', e => {
           ball.classList.add('blink');
           wiggle = null;
           still = 0;
-          nextWiggle = 2.8 + Math.random() * 2;
+          nextWiggle = 0.7 + Math.random() * 0.8;
         }
       } else if (settled) {
         still += dt;

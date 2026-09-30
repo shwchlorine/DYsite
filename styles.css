@@ -760,7 +760,7 @@ dialog h3 {
 
 /* the centre button glows on hover and blinks after each capture wiggle */
 .mb-btn { transition: fill 0.2s; }
-.mball:hover .mb-btn, .mball:focus-visible .mb-btn { fill: #d9c4ff; filter: drop-shadow(0 0 6px #b98cff); }
+.mball:hover .mb-btn, .mball:focus-visible .mb-btn { fill: #ff4d5e; filter: drop-shadow(0 0 6px #ff4d5e); }
 .mball.blink .mb-btn { animation: mbblink 0.9s ease-out; }
 @keyframes mbblink {
   0%, 100% { fill: #fff; }
