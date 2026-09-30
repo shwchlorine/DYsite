@@ -141,11 +141,11 @@ document.addEventListener('keydown', e => {
     // clip ~9% long, sleeve spans ~33%–81%, so it overlaps the name behind.
     const rect = stage.getBoundingClientRect();
     const stageTop = rect.top + window.scrollY;      // stage offset in the page
-    const vh = H + Math.max(0, rect.top + window.scrollY); // viewport-ish height
+    const vh = window.innerHeight;
     const cx = W / 2;
     HOOK = Math.max(36, Math.min(90, vh * 0.085));
     let jy = vh * 0.25 - stageTop;
-    jy = Math.max(40, Math.min(jy, H - bh - HOOK - 20));
+    jy = Math.max(40, Math.min(jy, vh - stageTop - bh - HOOK - 20));
     // straps cross the top edge of the page ~6% either side of centre,
     // and the anchors sit further up the same lines, off-screen
     const ay = -stageTop - 80;
@@ -165,6 +165,11 @@ document.addEventListener('keydown', e => {
       name.style.top = `${Math.round(cardMid - fs * 0.4)}px`;
       name.style.bottom = 'auto';
     }
+
+    // end the hero a little below the card instead of at the bottom of the
+    // screen, so the ticker moves up but the next section stays below the fold
+    const cardBottom = jy + HOOK - holeY + bh;
+    stage.style.height = `${Math.round(cardBottom + vh * 0.14)}px`;
   }
 
   // ── constraints ──
