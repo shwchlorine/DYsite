@@ -828,22 +828,31 @@ dialog h3 {
   --paper: #fbf8ef;
   --px: 'Pixelify Sans', var(--mono);
   --bw: min(92vw, 900px, calc((86svh - 170px) * 2.2));
+  /* sits in the hero where the name and ball were; app.js sets top and the
+     transform-origin (the ball's centre) so it grows out of / back into it */
+  position: absolute;
+  left: calc(50% - var(--bw) / 2);
+  top: 0;
+  z-index: 5;
   width: max-content;
-  max-width: none;
-  max-height: none;
-  margin: auto;
+  margin: 0;
   padding: 0;
-  border: 0;
   border-radius: 18px;
-  background: transparent;
   color: var(--ink);
-  box-shadow: 0 40px 100px -20px rgba(13, 11, 20, 0.6), 0 12px 30px rgba(13, 11, 20, 0.3);
-  overflow: visible;
+  box-shadow: 0 40px 100px -20px rgba(13, 11, 20, 0.45), 0 12px 30px rgba(13, 11, 20, 0.22);
 }
-.battle[open] { animation: popin 0.35s cubic-bezier(.2,1.2,.4,1); }
-@keyframes popin { from { transform: scale(0.9); opacity: 0; } }
-.battle::backdrop { background: rgba(23, 18, 37, 0.5); backdrop-filter: blur(6px); }
-.battle.leaving { opacity: 0; transform: scale(0.96); transition: opacity 0.3s ease, transform 0.3s ease; }
+.battle[hidden] { display: none; }
+.battle.shown { animation: btgrow 0.5s cubic-bezier(.2,1.1,.35,1); }
+@keyframes btgrow { from { transform: scale(0.06); opacity: 0; } }
+.battle.leaving {
+  transform: scale(0.06);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(.55,0,.8,.35), opacity 0.4s ease-in;
+}
+
+/* while battling, the name and the ball step aside */
+.stage :is(.name-behind, .mball, .mb-shadow) { transition: opacity 0.35s ease; }
+.stage.battling :is(.name-behind, .mball, .mb-shadow, .mb-hint) { opacity: 0 !important; pointer-events: none; }
 
 .bt-screen {
   position: relative;
@@ -1006,6 +1015,41 @@ dialog h3 {
   from { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
   to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2) rotate(90deg); opacity: 0; }
 }
+
+/* end-of-battle catch: thrown ball, QUOTA pulled in as red light, 3 wobbles */
+.bt-catch {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7%;
+  aspect-ratio: 1;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+}
+.bt-catch svg { display: block; width: 100%; height: 100%; overflow: visible; transform-origin: 50% 95%; }
+.cb-top {
+  transform-box: view-box;
+  transform-origin: 38px 20px;
+  transition: transform 0.18s cubic-bezier(.3,1.5,.5,1);
+}
+.bt-catch.open .cb-top { transform: translate(0, -6px) rotate(-16deg); }
+.cb-glow { opacity: 0; transition: opacity 0.15s; }
+.bt-catch.open .cb-glow { opacity: 1; }
+.bt-catch.clicked .cb-btn { animation: cbclick 0.6s ease-out; }
+@keyframes cbclick { 30% { fill: #ff4d5e; } }
+.battle.arena-in .bt-foe.absorb {
+  transition: transform 0.5s cubic-bezier(.6,0,.9,.4), opacity 0.5s ease-in;
+  transform: translate(var(--ax, 0px), var(--ay, 0px)) scale(0.04);
+  opacity: 0.2;
+}
+.bt-foe.absorb img {
+  animation: none;
+  transition: none;
+  filter: brightness(0) invert(36%) sepia(90%) saturate(4000%) hue-rotate(330deg) brightness(1.05);
+}
+.battle.arena-in .bt-foe.caught { transition: none; transform: scale(0); opacity: 0; }
+.bt-fx span.gold { color: #f5c542; text-shadow: 0 0 0.4em #fff8d6; }
 
 /* HUD */
 .bt-hud {

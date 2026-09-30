@@ -218,7 +218,7 @@ document.addEventListener('keydown', e => {
     state = 'idle';
     still = 0;
     nextWiggle = 1.2;
-    if (!reduceMotion) { vy = -650; onFloor = false; }
+    layout(false); // the battle may have grown the hero; restore it
   });
 
   // ── simulation ──
@@ -352,11 +352,36 @@ document.addEventListener('keydown', e => {
 // All copy is read from the page itself (work cards + About dialog).
 (() => {
   const dlg = document.getElementById('battle');
-  if (!dlg) return;
+  const stage = document.getElementById('stage');
+  if (!dlg || !stage) return;
+  const isOpen = () => !dlg.hidden;
+
+  // Put the battle where the name and ball are, and grow it out of the ball.
+  function place() {
+    const s = stage.getBoundingClientRect();
+    const b = document.getElementById('mball')?.getBoundingClientRect() || s;
+    const intro = stage.querySelector('.intro');
+    const introBottom = intro ? intro.offsetTop + intro.offsetHeight : 0;
+    const w = dlg.offsetWidth, h = dlg.offsetHeight;
+    const ballX = b.left - s.left + b.width / 2, ballY = b.top - s.top + b.height / 2;
+    const top = Math.max(introBottom + 20, ballY - h / 2);
+    dlg.style.top = `${Math.round(top)}px`;
+    if (top + h + 24 > stage.clientHeight) stage.style.height = `${Math.ceil(top + h + 24)}px`;
+    const left = (s.width - w) / 2;
+    dlg.style.transformOrigin = `${Math.round(ballX - left)}px ${Math.round(ballY - top)}px`;
+  }
+  function show() {
+    dlg.hidden = false;
+    place();
+    stage.classList.add('battling');
+    dlg.classList.remove('leaving', 'shown'); void dlg.offsetWidth; dlg.classList.add('shown');
+    const r = dlg.getBoundingClientRect();
+    if (r.top < 0 || r.bottom > window.innerHeight) dlg.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+  }
   const $ = (id) => document.getElementById(id);
   const hud = $('btHud'), line = $('btLine'), textBox = $('btText');
   const menu = $('btMenu'), movesEl = $('btMoves'), info = $('btMoveInfo');
-  const arena = $('btArena'), foe = $('foe'), me = $('me'), ball = $('ball');
+  const arena = $('btArena'), foe = $('foe'), me = $('me'), ball = $('ball'), catchBall = $('catchBall');
   const foeHp = $('foeHp'), fx = $('fx');
   const bagPanel = $('bagPanel'), aboutPanel = $('aboutPanel');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -435,8 +460,9 @@ document.addEventListener('keydown', e => {
     });
   }
   async function say(str, hold = true) {
+    const my = session;
     await type(str);
-    if (!hold) return;
+    if (!hold || my !== session) return;
     textBox.classList.add('more');
     await new Promise(r => { advance = r; });
     textBox.classList.remove('more');
@@ -501,7 +527,7 @@ document.addEventListener('keydown', e => {
   }
 
   async function open() {
-    if (dlg.open) return;
+    if (isOpen()) return;
     const my = ++session;
     used.clear();
     movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
@@ -510,11 +536,13 @@ document.addEventListener('keydown', e => {
     me.style.transform = '';
     ball.className = 'bt-ball';
     foe.className = 'bt-foe';
+    exitAfterCatch = false;
+    resetCatch();
     bagPanel.hidden = aboutPanel.hidden = true;
     line.textContent = '';
     dlg.classList.remove('leaving', 'arena-in');
     setMode('intro');
-    dlg.showModal();
+    show();
     dlg.classList.remove('enter'); void dlg.offsetWidth; dlg.classList.add('enter');
     textBox.focus({ preventScroll: true });
     await wait(reduce ? 0 : 950);
@@ -538,20 +566,25 @@ document.addEventListener('keydown', e => {
   async function useMove(i) {
     const m = moves[i];
     if (!m || busy) return;
+    const my = session;
+    const alive = () => my === session;
     busy = true;
     lastMove = i;
     setMode('busy');
     textBox.focus({ preventScroll: true });
     await type(`DERRICK used ${m.name.toUpperCase()}!`);
+    if (!alive()) return;
     // attack
     me.classList.remove('out', 'lunge'); void me.offsetWidth;
     me.classList.add('lunge');
     await wait(200);
-    burst();
+    if (!alive()) return;
+    burst(foe);
     foe.classList.remove('hit', 'shake'); void foe.offsetWidth;
     foe.classList.add('hit', 'shake');
     setHp(hp - 25);
     await wait(900);
+    if (!alive()) return;
     me.classList.remove('lunge');
     me.style.transform = 'scale(1)';
     foe.classList.remove('shake');
@@ -559,37 +592,140 @@ document.addEventListener('keydown', e => {
     movesEl.querySelector(`[data-move="${i}"]`)?.classList.add('used');
 
     await say(`${m.role} · ${m.years}`);
-    for (const page of pages(m.desc)) await say(page);
+    for (const page of pages(m.desc)) { if (!alive()) return; await say(page); }
+    if (!alive()) return;
     if (m.metric) await say(`It's super effective! ${m.metric} ${m.label}.`);
+    if (!alive()) return;
 
-    if (hp <= 0) {
-      foe.classList.add('faint');
-      await wait(650);
-      await say('QUOTA fainted!');
-      await say('DERRICK gained EXP. Points!');
-      foe.classList.remove('faint', 'hit', 'lit');
-      used.clear();
-      movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
-      setHp(100);
-      await wait(300);
-      foe.classList.add('lit');
-      await say('Another QUOTA appeared!');
-    }
+    if (hp <= 0 && !(await catchQuota(alive))) return;
     busy = false;
     command();
   }
 
-  function burst() {
-    const r = arena.getBoundingClientRect(), f = foe.getBoundingClientRect();
-    const cx = f.left - r.left + f.width / 2, cy = f.top - r.top + f.height * 0.6;
+  // ── end-of-battle catch ──
+  function resetCatch() {
+    catchBall.getAnimations({ subtree: true }).forEach(a => a.cancel());
+    catchBall.className = 'bt-catch';
+    catchBall.style.opacity = '';
+    catchBall.style.transform = '';
+    foe.style.removeProperty('--ax');
+    foe.style.removeProperty('--ay');
+  }
+
+  // Every catch ends by closing the battle back into the Master Ball. With
+  // exit (RUN / ✕ / Esc) it skips the stat line and closes after "Gotcha!".
+  // Returns false because the battle is over (or was closed part-way).
+  let catching = false, exitAfterCatch = false;
+  async function catchQuota(alive, exit = false) {
+    catching = true;
+    try { return await catchSequence(alive, exit); }
+    finally { catching = false; }
+  }
+  async function catchSequence(alive, exit) {
+    await type('DERRICK threw a MASTER BALL!');
+    if (!alive()) return false;
+
+    const A = arena.getBoundingClientRect(), M = me.getBoundingClientRect(), F = foe.getBoundingClientRect();
+    const size = catchBall.offsetWidth;
+    const from = { x: M.left - A.left + M.width * 0.62, y: M.top - A.top + M.height * 0.3 };
+    const hit = { x: F.left - A.left + F.width / 2, y: F.top - A.top + F.height * 0.42 };
+    const land = { x: hit.x, y: F.bottom - A.top - size * 0.5 };
+    const at = (p, r = 0) => `translate(${(p.x - size / 2).toFixed(1)}px, ${(p.y - size / 2).toFixed(1)}px) rotate(${r}deg)`;
+    const settle = (p) => {
+      catchBall.getAnimations().forEach(a => a.cancel());
+      catchBall.style.transform = at(p);
+    };
+
+    // throw: an arc from Derrick to QUOTA, spinning
+    catchBall.style.opacity = '1';
+    if (!reduce) {
+      const peak = { x: (from.x + hit.x) / 2, y: Math.min(from.y, hit.y) - A.height * 0.25 };
+      await catchBall.animate([
+        { transform: at(from, 0) },
+        { transform: at(peak, 400), offset: 0.5 },
+        { transform: at(hit, 720) },
+      ], { duration: 720, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished.catch(() => {});
+    }
+    settle(hit);
+    if (!alive()) return false;
+
+    // open and pull QUOTA in as red light
+    catchBall.classList.add('open');
+    foe.style.setProperty('--ax', `${(hit.x - (F.left - A.left + F.width / 2)).toFixed(1)}px`);
+    foe.style.setProperty('--ay', `${(hit.y - (F.top - A.top + F.height / 2)).toFixed(1)}px`);
+    foe.classList.remove('hit');
+    foe.classList.add('absorb');
+    await wait(560);
+    if (!alive()) return false;
+    foe.classList.add('caught');
+    foe.classList.remove('absorb');
+    catchBall.classList.remove('open');
+    await wait(180);
+    if (!alive()) return false;
+
+    // drop onto the platform with a little bounce
+    if (!reduce) {
+      const bounce = { x: land.x, y: land.y - size * 0.35 };
+      await catchBall.animate([
+        { transform: at(hit), easing: 'ease-in' },
+        { transform: at(land), offset: 0.6, easing: 'ease-out' },
+        { transform: at(bounce), offset: 0.8, easing: 'ease-in' },
+        { transform: at(land) },
+      ], { duration: 560, fill: 'forwards' }).finished.catch(() => {});
+    }
+    settle(land);
+    if (!alive()) return false;
+
+    // three wobbles
+    const svg = catchBall.querySelector('svg');
+    for (let k = 0; k < 3; k++) {
+      await wait(620);
+      if (!alive()) return false;
+      if (!reduce) {
+        await svg.animate([
+          { transform: 'rotate(0deg)' },
+          { transform: `rotate(${k % 2 ? 24 : -24}deg)` },
+          { transform: 'rotate(0deg)' },
+        ], { duration: 440, easing: 'ease-in-out' }).finished.catch(() => {});
+      }
+    }
+    await wait(520);
+    if (!alive()) return false;
+
+    // click!
+    catchBall.classList.add('clicked');
+    burst(catchBall, true);
+    if (exit || exitAfterCatch) {
+      await type('Gotcha! QUOTA was caught!');
+      await wait(1100);
+      if (alive()) close();
+      return false;
+    }
+    await say('Gotcha! QUOTA was caught!');
+    if (!alive()) return false;
+    const stat = [...document.querySelectorAll('.hero .ticker .tick')]
+      .map(t => t.textContent.replace(/\s+/g, ' ').trim())
+      .find(t => /quota/i.test(t));
+    if (stat) { await say(`${stat}.`); if (!alive()) return false; }
+
+    // caught: the battle folds back into the Master Ball
+    close();
+    return false;
+  }
+
+  function burst(target, gold = false) {
+    const r = arena.getBoundingClientRect(), f = target.getBoundingClientRect();
+    const cx = f.left - r.left + f.width / 2, cy = f.top - r.top + f.height * (gold ? 0.5 : 0.6);
+    const reach = gold ? Math.max(f.width * 1.6, 40) : f.width * 0.7;
     for (let k = 0; k < 9; k++) {
       const s = document.createElement('span');
       s.textContent = k % 3 ? '✦' : '✧';
+      if (gold) s.className = 'gold';
       const a = (k / 9) * Math.PI * 2;
       s.style.left = `${cx}px`;
       s.style.top = `${cy}px`;
-      s.style.setProperty('--dx', `${Math.cos(a) * f.width * 0.7}px`);
-      s.style.setProperty('--dy', `${Math.sin(a) * f.height * 0.6}px`);
+      s.style.setProperty('--dx', `${Math.cos(a) * reach}px`);
+      s.style.setProperty('--dy', `${Math.sin(a) * (gold ? reach * 0.8 : f.height * 0.6)}px`);
       fx.append(s);
       setTimeout(() => s.remove(), 700);
     }
@@ -606,28 +742,53 @@ document.addEventListener('keydown', e => {
     command();
   }
 
+  // RUN, ✕ and Esc all end with the catch, then close. A second ✕ during
+  // the catch closes straight away.
   async function run() {
     if (mode === 'closed') return;
+    if (catching) {
+      if (exitAfterCatch) close();
+      else exitAfterCatch = true;
+      return;
+    }
+    // nothing to catch yet (still in the intro) → just close
+    const quotaOut = foe.classList.contains('lit') && !foe.classList.contains('caught');
+    const derrickOut = me.classList.contains('out') || me.classList.contains('lunge') || me.style.transform === 'scale(1)';
+    if (mode === 'intro' || !quotaOut || !derrickOut) {
+      close();
+      return;
+    }
+    const my = ++session; // interrupt whatever was playing
+    advance = null;
+    if (finishTyping) finishTyping();
+    exitAfterCatch = true;
     busy = true;
     setMode('busy');
+    bagPanel.hidden = aboutPanel.hidden = true;
     textBox.focus({ preventScroll: true });
-    await type('Got away safely!');
-    await wait(650);
-    close();
+    foe.classList.remove('hit', 'shake');
+    me.classList.remove('lunge');
+    me.style.transform = 'scale(1)';
+    await catchQuota(() => my === session, true);
   }
   function close() {
     session++;
+    exitAfterCatch = false;
+    resetCatch();
     advance = null;
     if (finishTyping) finishTyping();
+    // shrink back into the ball, then bring the name and ball back
+    dlg.classList.remove('shown');
     dlg.classList.add('leaving');
     setTimeout(() => {
-      if (dlg.open) dlg.close();
+      dlg.hidden = true;
       dlg.classList.remove('leaving', 'enter', 'arena-in');
+      stage.classList.remove('battling');
       busy = false;
       mode = 'closed';
       document.dispatchEvent(new CustomEvent('battle:closed'));
       document.getElementById('mball')?.focus({ preventScroll: true });
-    }, reduce ? 0 : 350);
+    }, reduce ? 0 : 450);
   }
 
   function back() {
@@ -663,24 +824,33 @@ document.addEventListener('keydown', e => {
     if (b) showInfo(+b.dataset.move);
   });
   dlg.querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', closePanels));
-  $('btClose').addEventListener('click', close);
+  $('btClose').addEventListener('click', run);
   textBox.addEventListener('click', onAdvance);
   arena.addEventListener('click', (e) => {
     if (e.target.closest('.bt-panel')) return;
     if (mode === 'intro' || mode === 'busy') onAdvance();
   });
-  dlg.addEventListener('cancel', (e) => { e.preventDefault(); if (mode === 'intro' || mode === 'busy') return; back(); });
-  dlg.addEventListener('close', () => {
-    if (mode !== 'closed') {
-      session++; mode = 'closed'; busy = false;
-      dlg.classList.remove('leaving', 'enter', 'arena-in');
-      document.dispatchEvent(new CustomEvent('battle:closed'));
-    }
+  // keep keyboard focus inside the battle when clicking its scenery
+  dlg.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button, .bt-about')) return;
+    setTimeout(() => textBox.focus({ preventScroll: true }), 0);
+  });
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { if (isOpen()) place(); }, 160);
   });
 
   document.addEventListener('keydown', (e) => {
-    if (!dlg.open) return;
+    // only while the battle is up and has focus, so page scrolling keys still work
+    if (!isOpen() || !dlg.contains(document.activeElement)) return;
     const k = e.key;
+    if (k === 'Escape') {
+      e.preventDefault();
+      if (mode === 'intro') return;
+      if (mode === 'busy') run(); else back();
+      return;
+    }
     if (mode === 'intro' || mode === 'busy') {
       if (k === 'Enter' || k === ' ' || k === 'z' || k === 'Z') { e.preventDefault(); onAdvance(); }
       return;
