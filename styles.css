@@ -1431,6 +1431,7 @@ dialog h3 {
   gap: 0.35em;
   font-size: 0.95em;
 }
+.bt-moveinfo > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* never grow the HUD */
 .bt-moveinfo b { font-weight: 700; }
 .bt-moveinfo .k { color: #8a8398; margin-right: 0.4em; }
 
