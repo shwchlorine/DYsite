@@ -650,16 +650,15 @@ dialog h3 {
   * { transition-duration: 0.01s !important; }
 }
 
-/* ─────────── STAGE: lanyard + trading card ─────────── */
-/* Full-bleed stage; the physics in app.js positions the card and straps in
-   stage-local CSS pixels, so nothing here depends on an SVG viewBox. */
+/* ─────────── STAGE: Master Ball on the name ─────────── */
+/* Full-bleed stage; app.js places the ball, its shadow, and the name in
+   stage-local CSS pixels and sets the stage height. */
 .stage {
-  /* sleeve is ~48% of the viewport tall, like samfcheng.com (sleeve adds 56px of chrome) */
-  --card-w: clamp(200px, min(calc((48svh - 56px) * 63 / 88), 24vw), 330px);
+  --ball: clamp(150px, min(34svh, 28vw), 300px);
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  height: max(600px, calc(100svh - clamp(16px, 3vw, 32px)));
+  height: max(560px, calc(100svh - clamp(16px, 3vw, 32px)));
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -708,373 +707,140 @@ dialog h3 {
 .name-behind .name-first { font-weight: 500; font-style: normal; }
 .name-behind .name-last { font-style: italic; font-weight: 400; color: var(--accent); }
 
-.strap-layer {
+/* ─────────── MASTER BALL ─────────── */
+.mball {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-.strap-shadow { z-index: 2; }
-.strap-front { z-index: 4; }
-.strap-shadow path { fill: none; stroke: rgba(23, 18, 37, 0.16); stroke-width: 16; stroke-linecap: butt; }
-.strap { fill: none; stroke: #1c1924; stroke-width: 13; stroke-linecap: butt; stroke-linejoin: round; }
-.strap-sheen { fill: none; stroke: rgba(255, 255, 255, 0.09); stroke-width: 3; stroke-linecap: butt; }
-
-/* ─────────── BADGE (sleeve + card) ─────────── */
-.badge {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: calc(var(--card-w) + 20px);
+  width: var(--ball);
+  height: var(--ball);
   padding: 0;
   margin: 0;
   border: 0;
+  border-radius: 50%;
   background: none;
-  font: inherit;
-  color: inherit;
   cursor: grab;
   z-index: 3;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: 50% 100%;
   will-change: transform;
   visibility: hidden; /* shown once physics has placed it */
 }
-.badge.ready { visibility: visible; }
-.badge:active { cursor: grabbing; }
-.badge:focus-visible { outline: none; }
-.badge:focus-visible .sleeve { box-shadow: 0 0 0 3px var(--accent); }
-
-/* clear vinyl ID sleeve */
-.sleeve {
-  --ry: 0deg;
-  --rx: 0deg;
-  position: relative;
-  padding: 46px 10px 10px;
-  border-radius: 12px;
-  background: linear-gradient(160deg, rgba(255,255,255,0.62), rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.45));
-  border: 1px solid rgba(23, 18, 37, 0.16);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.65),
-    inset 0 -1px 0 rgba(23,18,37,0.06);
-  transform: perspective(1100px) rotateY(var(--ry)) rotateX(var(--rx));
-  transform-style: preserve-3d;
-  filter: drop-shadow(18px 22px 18px rgba(23, 18, 37, 0.22)) drop-shadow(2px 4px 4px rgba(23, 18, 37, 0.12));
-}
-/* the pressed seam across the top pocket */
-.sleeve::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  right: 6px;
-  top: 38px;
-  height: 3px;
-  border-top: 1px solid rgba(23,18,37,0.12);
-  border-bottom: 1px solid rgba(255,255,255,0.8);
-}
-.sleeve-top {
-  position: absolute;
-  top: 12px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  pointer-events: none;
-}
-.sleeve-top .hole,
-.sleeve-top .slot {
-  background: rgba(236, 232, 242, 0.9);
-  box-shadow: inset 0 1px 2px rgba(23,18,37,0.35), 0 0 0 1px rgba(23,18,37,0.18);
-}
-.sleeve-top .hole { width: 14px; height: 14px; border-radius: 50%; }
-.sleeve-top .slot { width: 44px; height: 9px; border-radius: 6px; }
-.sleeve-glare {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.38) 42%, transparent 50%, transparent 70%, rgba(255,255,255,0.18) 76%, transparent 80%);
-  background-size: 220% 100%;
-  background-position: var(--gx, 50%) 0;
-  mix-blend-mode: screen;
-}
-
-/* ─────────── TRADING CARD ─────────── */
-.tcg {
-  --pad: calc(var(--card-w) * 0.035);
-  width: var(--card-w);
-  aspect-ratio: 63 / 88;
-  border-radius: calc(var(--card-w) * 0.045);
-  padding: var(--pad);
-  background: linear-gradient(135deg, #d9d8de 0%, #a9a7b0 22%, #f1f0f4 45%, #9b98a3 70%, #dcdbe1 100%);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
-  font-size: calc(var(--card-w) / 26);
-  color: #111;
-  text-align: left;
-  font-family: var(--sans);
-}
-.tcg-face {
-  position: relative;
-  height: 100%;
-  border-radius: calc(var(--card-w) * 0.025);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(180deg, #6f86ff 0%, #8fb4ff 38%, #b7d4ff 58%, #cfe6c6 66%, #9fd08a 78%, #7fbf6e 100%);
-  box-shadow: inset 0 0 0 1.5px rgba(0,0,0,0.35);
-}
-
-/* sky details */
-.tcg-sky { position: absolute; inset: 0; pointer-events: none; }
-.cloud {
-  position: absolute;
-  background: #fff;
-  border-radius: 999px;
-  opacity: 0.95;
-  box-shadow: 1.2em 0.3em 0 -0.1em #fff, -1.1em 0.35em 0 -0.2em #fff;
-}
-.c1 { width: 3.4em; height: 1.2em; top: 17%; left: -0.6em; }
-.c2 { width: 3em; height: 1em; top: 11%; right: 0.4em; }
-.c3 { width: 2.6em; height: 0.9em; top: 50%; right: -0.8em; opacity: 0.8; }
-.spark { position: absolute; color: #fff; line-height: 1; text-shadow: 0 0 0.4em rgba(255,255,255,0.9); animation: twinkle 2.4s ease-in-out infinite; }
-.s1 { top: 14%; left: 10%; font-size: 1.6em; }
-.s2 { top: 30%; right: 8%; font-size: 1.3em; animation-delay: -0.6s; }
-.s3 { top: 44%; left: 6%; font-size: 1.1em; animation-delay: -1.2s; }
-.s4 { top: 22%; right: 20%; font-size: 0.8em; animation-delay: -1.8s; }
-.s5 { top: 9%; left: 34%; font-size: 0.9em; animation-delay: -0.9s; }
-.s6 { top: 48%; right: 16%; font-size: 1em; animation-delay: -2.1s; }
-@keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.75); } }
-.hill { position: absolute; border-radius: 50%; }
-.h1 { width: 140%; height: 40%; left: -30%; top: 58%; background: #a6d78f; }
-.h2 { width: 130%; height: 40%; left: 10%; top: 63%; background: #8cc877; }
-
-/* header */
-.tcg-head {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.35em;
-  padding: 0.45em 0.6em 0.3em;
-  z-index: 1;
-}
-.tcg-stage {
-  font-size: 0.62em;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 0.15em 0.5em;
-  border-radius: 0.3em;
-  background: linear-gradient(180deg, #f4f4f6, #b8b6be);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
-  font-style: italic;
-}
-.tcg-name {
-  font-weight: 800;
-  font-size: 1.28em;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  color: #111;
-}
-.tcg-name i {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 0.95em;
-  color: var(--accent);
-  -webkit-text-stroke: 0.04em #fff;
-  paint-order: stroke fill;
-  margin-left: 0.05em;
-}
-.tcg-hp {
-  margin-left: auto;
-  font-weight: 800;
-  font-size: 1.4em;
-  line-height: 1;
-  white-space: nowrap;
-}
-.tcg-hp small { font-size: 0.45em; font-weight: 800; margin-right: 0.1em; }
-
-.energy {
-  --e: 1.35em;
-  display: inline-block;
-  flex: none;
-  width: var(--e);
-  height: var(--e);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%, #fff 0 18%, transparent 19%),
-    radial-gradient(ellipse 42% 26% at 50% 50%, #3a1d6e 0 60%, transparent 62%),
-    radial-gradient(circle at 35% 30%, #c79cff, #7b3fd6 60%, #4b1f96);
-  box-shadow: 0 0 0 0.1em #fff, 0 0 0 0.16em rgba(0,0,0,0.35);
-}
-.energy.sm { --e: 1em; }
-.energy.xs { --e: 0.8em; background: radial-gradient(circle at 35% 30%, #fff, #cfcdd6 70%, #9d9aa6); }
-
-/* portrait bubble */
-.tcg-portrait {
-  position: relative;
-  z-index: 1;
-  width: 74%;
-  aspect-ratio: 1;
-  margin: 0.2em auto 0;
-  border-radius: 50%;
-  padding: 0.3em;
-  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.95), rgba(255,255,255,0.55) 60%, rgba(255,255,255,0.8));
-  box-shadow: 0 0 0 0.12em rgba(255,255,255,0.9), 0 0 1.6em rgba(255,255,255,0.75), 0 0.4em 1em rgba(40,40,120,0.25);
-}
-.tcg-portrait img {
+.mball.ready { visibility: visible; }
+.mball:active { cursor: grabbing; }
+.mball:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+.mb-spin { display: block; width: 100%; height: 100%; will-change: transform; }
+.mb-svg {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  -webkit-user-drag: none;
+  overflow: visible;
+  filter: drop-shadow(0 18px 22px rgba(23, 18, 37, 0.18));
 }
-/* a bubble highlight on top of the portrait */
-.tcg-portrait::after {
-  content: "";
+.mball.shake .mb-svg { animation: mbshake 0.34s linear; }
+@keyframes mbshake {
+  20% { transform: translateX(-3%) rotate(-4deg); }
+  40% { transform: translateX(3%) rotate(4deg); }
+  60% { transform: translateX(-2%) rotate(-3deg); }
+  80% { transform: translateX(2%) rotate(2deg); }
+}
+
+/* top half hinges open at the back-right of the band */
+.mb-top {
+  transform-box: view-box;
+  transform-origin: 194px 100px;
+  transition: transform 0.28s cubic-bezier(.3,1.5,.5,1);
+}
+.mball.open .mb-top { transform: rotate(-42deg); }
+#mbInner { opacity: 0; transition: opacity 0.2s; }
+.mball.open #mbInner { opacity: 1; }
+
+/* the centre button glows on hover and blinks after each capture wiggle */
+.mb-btn { transition: fill 0.2s; }
+.mball:hover .mb-btn, .mball:focus-visible .mb-btn { fill: #d9c4ff; filter: drop-shadow(0 0 6px #b98cff); }
+.mball.blink .mb-btn { animation: mbblink 0.9s ease-out; }
+@keyframes mbblink {
+  0%, 100% { fill: #fff; }
+  30% { fill: #ff5a7a; }
+  60% { fill: #fff; }
+}
+
+.mb-shadow {
   position: absolute;
-  inset: 0.3em;
+  left: 0;
+  top: 0;
+  width: calc(var(--ball) * 0.78);
+  height: calc(var(--ball) * 0.12);
   border-radius: 50%;
-  background: radial-gradient(ellipse 45% 30% at 32% 20%, rgba(255,255,255,0.55), transparent 70%);
-  pointer-events: none;
-}
-
-/* moves */
-.tcg-body {
-  position: relative;
-  z-index: 1;
-  margin-top: auto;
-  padding: 0 0.7em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35em;
-}
-.tcg-move p { margin: 0; }
-.move-title {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  font-weight: 800;
-  font-size: 1.12em;
-  line-height: 1.2;
-}
-.ability-tag {
-  font-size: 0.62em;
-  font-weight: 800;
-  font-style: italic;
-  color: #fff;
-  padding: 0.18em 0.8em;
-  border-radius: 999px 0.3em 0.3em 999px;
-  background: linear-gradient(180deg, #e0403a, #a8161a);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
-}
-.ability-tag + * { color: #b3141a; }
-.move-title:first-child:has(.ability-tag) { color: #b3141a; }
-.cost { display: inline-flex; gap: 0.15em; }
-.dmg { margin-left: auto; font-size: 1.1em; }
-.move-text {
-  font-size: 0.74em;
-  line-height: 1.32;
-  font-weight: 500;
-  color: #151515;
-  margin-top: 0.1em !important;
-}
-
-.tcg-stats {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  gap: 0.4em;
-  margin: 0.45em 0.6em 0;
-  padding-top: 0.3em;
-  border-top: 1px solid rgba(0,0,0,0.25);
-  font-size: 0.56em;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.tcg-stats b { font-weight: 800; margin-left: 0.2em; }
-.retreat { display: inline-flex; vertical-align: middle; }
-
-.tcg-foot {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: stretch;
-  gap: 0.4em;
-  margin: 0.35em 0.5em 0.5em;
-}
-.tcg-meta {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 0.5em;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.tcg-meta .set b {
-  display: inline-block;
-  padding: 0 0.3em;
-  border-radius: 0.2em;
-  background: #111;
-  color: #fff;
-  margin-right: 0.2em;
-}
-.tcg-rule {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0.25em 0.6em;
-  border-radius: 0.5em;
-  background: linear-gradient(180deg, #f5f5f7, #c9c7cf);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
-  font-size: 0.56em;
-  line-height: 1.25;
-}
-.tcg-rule b { font-style: italic; font-weight: 800; }
-
-/* holographic foil + light glare, driven by --hx/--hy from app.js */
-.holo, .glare {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(23, 18, 37, 0.32), rgba(23, 18, 37, 0) 70%);
   z-index: 2;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
-.holo {
-  background:
-    repeating-linear-gradient(110deg,
-      rgba(255, 0, 132, 0.5) 0%, rgba(252, 164, 0, 0.5) 6%, rgba(255, 255, 0, 0.45) 12%,
-      rgba(0, 255, 138, 0.45) 18%, rgba(0, 207, 255, 0.5) 24%, rgba(204, 76, 250, 0.5) 30%, rgba(255, 0, 132, 0.5) 36%);
-  background-size: 300% 300%;
-  background-position: var(--hx, 50%) var(--hy, 50%);
-  mix-blend-mode: color-dodge;
-  opacity: var(--holo, 0.22);
+
+.mb-hint {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
   transition: opacity 0.4s ease;
 }
-.glare {
-  background: radial-gradient(circle at var(--lx, 50%) var(--ly, 30%), rgba(255,255,255,0.55), rgba(255,255,255,0) 45%);
-  mix-blend-mode: soft-light;
-  opacity: var(--glare, 0.5);
+.mb-hint.show { opacity: 0.75; }
+
+.mb-light {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 35%, rgba(233, 216, 255, 0.9) 55%, rgba(185, 140, 255, 0) 72%);
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
 }
-.badge:hover { --holo: 0.45; }
+.mb-light.burst { animation: mblight 0.6s ease-out forwards; }
+@keyframes mblight {
+  0% { opacity: 1; transform: scale(0.2); }
+  60% { opacity: 1; }
+  100% { opacity: 0; transform: scale(60); }
+}
+
+/* traits in the About dialog */
+.traits { margin: 0; display: grid; gap: 4px 0; }
+.traits dt { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; margin-top: 10px; }
+.traits dt span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #fff;
+  background: var(--accent);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-right: 6px;
+  vertical-align: 2px;
+}
+.traits dd { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--fg); opacity: 0.85; }
 
 @media (max-width: 720px) {
-  .stage { --card-w: clamp(200px, 56vw, 250px); height: clamp(640px, calc(100svh - 20px), 820px); }
+  .stage { --ball: clamp(140px, 40vw, 200px); height: clamp(560px, calc(100svh - 20px), 820px); }
   .stage .now { display: none; }
   .name-behind { font-size: 25vw; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .spark { animation: none; }
-}
-
-/* ─────────── BATTLE (opens from the card) ─────────── */
+/* ─────────── BATTLE (opens from the Master Ball) ─────────── */
 .battle {
   --ink: #2b2540;
   --paper: #fbf8ef;
@@ -1421,6 +1187,10 @@ dialog h3 {
 .bt-about li { display: grid; grid-template-columns: 7.5em 1fr auto; gap: 0.8em; padding: 0.45em 0; border-top: 1px solid var(--border); font-family: var(--sans); font-size: 0.92em; }
 .bt-about .years { font-family: var(--mono); color: var(--muted); font-size: 0.85em; }
 .bt-about .role { color: var(--muted); text-align: right; }
+.bt-about dl { margin: 0; }
+.bt-about dt { font-family: var(--sans); font-weight: 600; margin-top: 0.5em; }
+.bt-about dt span { font-family: var(--px); font-size: 0.8em; color: #fff; background: var(--accent); padding: 0.05em 0.5em; border-radius: 999px; margin-right: 0.4em; }
+.bt-about dd { margin: 0.1em 0 0; }
 
 /* entrance: sides slide in once the wipe has opened */
 .foe-status, .foe-pad, .bt-foe { transform: translateX(-140%); transition: transform 0.7s cubic-bezier(.2,.7,.2,1); }
