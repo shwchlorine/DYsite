@@ -260,7 +260,9 @@ document.addEventListener('keydown', e => {
   badge.addEventListener('pointercancel', endDrag);
   badge.addEventListener('pointerleave', () => { hover.on = false; });
   badge.addEventListener('click', () => {
-    if (!window._dragged) document.getElementById('about').showModal();
+    if (window._dragged) return;
+    if (window.openBattle) window.openBattle();
+    else document.getElementById('about').showModal();
   });
 
   // ── simulation ──
@@ -381,4 +383,345 @@ document.addEventListener('keydown', e => {
   } else {
     window.addEventListener('load', start);
   }
+})();
+
+// ─────────── BATTLE ───────────
+// Clicking the card starts a battle against QUOTA. FIGHT plays the work
+// entries as moves, BAG shows the stack, ABOUT shows the bio, RUN closes.
+// All copy is read from the page itself (work cards + About dialog).
+(() => {
+  const dlg = document.getElementById('battle');
+  if (!dlg) return;
+  const $ = (id) => document.getElementById(id);
+  const hud = $('btHud'), line = $('btLine'), textBox = $('btText');
+  const menu = $('btMenu'), movesEl = $('btMoves'), info = $('btMoveInfo');
+  const arena = $('btArena'), foe = $('foe'), me = $('me'), ball = $('ball');
+  const foeHp = $('foeHp'), meExp = $('meExp'), fx = $('fx');
+  const bagPanel = $('bagPanel'), aboutPanel = $('aboutPanel');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = (ms) => new Promise(r => setTimeout(r, reduce ? Math.min(ms, 120) : ms));
+  const text = (root, sel) => (root.querySelector(sel)?.textContent || '').replace(/\s+/g, ' ').trim();
+
+  // ── data from the page ──
+  const moves = [...document.querySelectorAll('#work .project')].map(p => {
+    const num = p.querySelector('.metric-num');
+    const metric = num
+      ? text(num, '.metric-prefix') + (num.querySelector('.metric-value')?.dataset.target || '') + text(num, '.metric-suffix')
+      : '';
+    return {
+      name: text(p, 'h2'),
+      years: text(p, '.proj-year'),
+      role: text(p, '.proj-role'),
+      desc: text(p, '.proj-desc'),
+      metric,
+      label: text(p, '.metric-label'),
+    };
+  });
+  const stack = text(document, '#about .stack-line').split('·').map(t => t.trim()).filter(Boolean);
+
+  // bag items
+  $('bagItems').innerHTML = '';
+  stack.forEach((item, i) => {
+    const li = document.createElement('li');
+    const icon = document.createElement('i');
+    icon.textContent = item[0];
+    li.append(icon, document.createTextNode(item));
+    li.style.animationDelay = `${i * 40}ms`;
+    $('bagItems').append(li);
+  });
+  // about: the bio and experience from the About dialog
+  const aboutBody = $('aboutBody');
+  document.querySelectorAll('#about .bio p').forEach(p => aboutBody.append(p.cloneNode(true)));
+  const exp = document.querySelector('#about .experience');
+  if (exp) {
+    const h = document.createElement('h4');
+    h.textContent = text(document, '#experience-title') || 'Experience';
+    aboutBody.append(h, exp.cloneNode(true));
+  }
+
+  // move buttons
+  moves.forEach((m, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'menuitem');
+    b.dataset.move = i;
+    b.textContent = m.name.toUpperCase();
+    movesEl.append(b);
+  });
+
+  // ── text box ──
+  let typingTimer = null, finishTyping = null, advance = null;
+  function type(str) {
+    return new Promise(resolve => {
+      clearTimeout(typingTimer);
+      let i = 0;
+      line.textContent = '';
+      finishTyping = () => { clearTimeout(typingTimer); typingTimer = null; finishTyping = null; line.textContent = str; resolve(); };
+      if (reduce) { finishTyping(); return; }
+      const tick = () => {
+        i += 2;
+        line.textContent = str.slice(0, i);
+        if (i >= str.length) { typingTimer = null; finishTyping = null; resolve(); return; }
+        typingTimer = setTimeout(tick, 22);
+      };
+      typingTimer = setTimeout(tick, 22);
+    });
+  }
+  async function say(str, hold = true) {
+    await type(str);
+    if (!hold) return;
+    textBox.classList.add('more');
+    await new Promise(r => { advance = r; });
+    textBox.classList.remove('more');
+  }
+  function onAdvance() {
+    if (finishTyping) { finishTyping(); return; }
+    if (advance) { const a = advance; advance = null; a(); }
+  }
+  // pack sentences into text-box sized pages
+  function pages(str, max = 130) {
+    const out = [];
+    let cur = '';
+    for (const sentence of str.split(/(?<=[.!?])\s+/)) {
+      if (cur && (cur + ' ' + sentence).length > max) { out.push(cur); cur = sentence; }
+      else cur = cur ? cur + ' ' + sentence : sentence;
+    }
+    if (cur) out.push(cur);
+    return out;
+  }
+
+  // ── modes ──
+  let mode = 'closed', lastCmd = 0, lastMove = 0, hp = 100, busy = false, session = 0;
+  const used = new Set();
+  function setMode(m) {
+    mode = m;
+    hud.dataset.mode = m === 'intro' || m === 'busy' ? 'text' : m;
+  }
+  function focusIn(container, idx) {
+    const items = [...container.querySelectorAll('button')];
+    (items[idx] || items[0])?.focus({ preventScroll: true });
+  }
+  function setHp(v) {
+    hp = Math.max(0, v);
+    foeHp.style.setProperty('--hp', `${hp}%`);
+    foeHp.classList.toggle('mid', hp <= 50 && hp > 20);
+    foeHp.classList.toggle('low', hp <= 20);
+  }
+  function showInfo(i) {
+    const m = moves[i];
+    if (!m) return;
+    info.innerHTML = '';
+    const row = (k, v) => {
+      const p = document.createElement('div');
+      const kk = document.createElement('span'); kk.className = 'k'; kk.textContent = k;
+      const vv = document.createElement('b'); vv.textContent = v;
+      p.append(kk, vv);
+      info.append(p);
+    };
+    row('PP', used.has(i) ? '0/1' : '1/1');
+    row('YEARS', m.years);
+    row('TYPE/', m.role.split('·')[0].trim());
+  }
+
+  async function command() {
+    setMode('command');
+    focusIn(menu, lastCmd);
+    await type('What will DERRICK do?');
+  }
+
+  async function open() {
+    if (dlg.open) return;
+    const my = ++session;
+    used.clear();
+    movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
+    setHp(100);
+    meExp.style.setProperty('--exp', '0%');
+    me.className = 'bt-me';
+    me.style.transform = '';
+    ball.className = 'bt-ball';
+    foe.className = 'bt-foe';
+    bagPanel.hidden = aboutPanel.hidden = true;
+    line.textContent = '';
+    dlg.classList.remove('leaving', 'arena-in');
+    setMode('intro');
+    dlg.showModal();
+    dlg.classList.remove('enter'); void dlg.offsetWidth; dlg.classList.add('enter');
+    textBox.focus({ preventScroll: true });
+    await wait(reduce ? 0 : 950);
+    dlg.classList.add('arena-in');
+    await wait(700);
+    if (my !== session) return;
+    await say('A wild QUOTA appeared!');
+    if (my !== session) return;
+    await type('Go! DERRICK!');
+    ball.classList.add('throw');
+    await wait(720);
+    ball.classList.remove('throw');
+    ball.classList.add('open');
+    me.classList.add('out');
+    await wait(550);
+    if (my !== session) return;
+    command();
+  }
+
+  async function useMove(i) {
+    const m = moves[i];
+    if (!m || busy) return;
+    busy = true;
+    lastMove = i;
+    setMode('busy');
+    textBox.focus({ preventScroll: true });
+    await type(`DERRICK used ${m.name.toUpperCase()}!`);
+    // attack
+    me.classList.remove('out', 'lunge'); void me.offsetWidth;
+    me.classList.add('lunge');
+    await wait(200);
+    burst();
+    foe.classList.remove('hit', 'shake'); void foe.offsetWidth;
+    foe.classList.add('hit', 'shake');
+    setHp(hp - 25);
+    await wait(900);
+    me.classList.remove('lunge');
+    me.style.transform = 'scale(1)';
+    foe.classList.remove('shake');
+    used.add(i);
+    movesEl.querySelector(`[data-move="${i}"]`)?.classList.add('used');
+
+    await say(`${m.role} · ${m.years}`);
+    for (const page of pages(m.desc)) await say(page);
+    if (m.metric) await say(`It's super effective! ${m.metric} ${m.label}.`);
+
+    if (hp <= 0) {
+      foe.classList.add('faint');
+      await wait(650);
+      await say('QUOTA fainted!');
+      meExp.style.setProperty('--exp', '100%');
+      await say('DERRICK gained EXP. Points!');
+      meExp.style.setProperty('--exp', '0%');
+      foe.classList.remove('faint', 'hit');
+      used.clear();
+      movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
+      setHp(100);
+      await wait(300);
+      await say('Another QUOTA appeared!');
+    }
+    busy = false;
+    command();
+  }
+
+  function burst() {
+    const r = arena.getBoundingClientRect(), f = foe.getBoundingClientRect();
+    const cx = f.left - r.left + f.width / 2, cy = f.top - r.top + f.height * 0.6;
+    for (let k = 0; k < 9; k++) {
+      const s = document.createElement('span');
+      s.textContent = k % 3 ? '✦' : '✧';
+      const a = (k / 9) * Math.PI * 2;
+      s.style.left = `${cx}px`;
+      s.style.top = `${cy}px`;
+      s.style.setProperty('--dx', `${Math.cos(a) * f.width * 0.7}px`);
+      s.style.setProperty('--dy', `${Math.sin(a) * f.height * 0.6}px`);
+      fx.append(s);
+      setTimeout(() => s.remove(), 700);
+    }
+  }
+
+  function openPanel(panel, title) {
+    setMode('panel');
+    panel.hidden = false;
+    line.textContent = title;
+    panel.querySelector('[data-back]')?.focus({ preventScroll: true });
+  }
+  function closePanels() {
+    bagPanel.hidden = aboutPanel.hidden = true;
+    command();
+  }
+
+  async function run() {
+    if (mode === 'closed') return;
+    busy = true;
+    setMode('busy');
+    textBox.focus({ preventScroll: true });
+    await type('Got away safely!');
+    await wait(650);
+    close();
+  }
+  function close() {
+    session++;
+    advance = null;
+    if (finishTyping) finishTyping();
+    dlg.classList.add('leaving');
+    setTimeout(() => {
+      if (dlg.open) dlg.close();
+      dlg.classList.remove('leaving', 'enter', 'arena-in');
+      busy = false;
+      mode = 'closed';
+      document.getElementById('badge')?.focus({ preventScroll: true });
+    }, reduce ? 0 : 350);
+  }
+
+  function back() {
+    if (mode === 'fight') { command(); focusIn(menu, 0); }
+    else if (mode === 'panel') closePanels();
+    else if (mode === 'command') run();
+  }
+
+  // ── input ──
+  menu.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b || mode !== 'command') return;
+    const cmd = b.dataset.cmd;
+    lastCmd = [...menu.children].indexOf(b);
+    if (cmd === 'fight') {
+      setMode('fight');
+      focusIn(movesEl, lastMove);
+      showInfo(lastMove);
+    } else if (cmd === 'bag') openPanel(bagPanel, text(document, '#stack-title') || 'Stack');
+    else if (cmd === 'about') openPanel(aboutPanel, text(document, '#about-title') || 'About');
+    else if (cmd === 'run') run();
+  });
+  movesEl.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (b && mode === 'fight') useMove(+b.dataset.move);
+  });
+  movesEl.addEventListener('focusin', (e) => {
+    const b = e.target.closest('button');
+    if (b) showInfo(+b.dataset.move);
+  });
+  movesEl.addEventListener('mouseover', (e) => {
+    const b = e.target.closest('button');
+    if (b) showInfo(+b.dataset.move);
+  });
+  dlg.querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', closePanels));
+  $('btClose').addEventListener('click', close);
+  textBox.addEventListener('click', onAdvance);
+  arena.addEventListener('click', (e) => {
+    if (e.target.closest('.bt-panel')) return;
+    if (mode === 'intro' || mode === 'busy') onAdvance();
+  });
+  dlg.addEventListener('cancel', (e) => { e.preventDefault(); if (mode === 'intro' || mode === 'busy') return; back(); });
+  dlg.addEventListener('close', () => { if (mode !== 'closed') { session++; mode = 'closed'; busy = false; } });
+
+  document.addEventListener('keydown', (e) => {
+    if (!dlg.open) return;
+    const k = e.key;
+    if (mode === 'intro' || mode === 'busy') {
+      if (k === 'Enter' || k === ' ' || k === 'z' || k === 'Z') { e.preventDefault(); onAdvance(); }
+      return;
+    }
+    if (k === 'x' || k === 'X' || k === 'Backspace') { e.preventDefault(); back(); return; }
+    const grid = mode === 'command' ? menu : mode === 'fight' ? movesEl : null;
+    if (!grid) return;
+    if (k === 'z' || k === 'Z') { e.preventDefault(); document.activeElement?.click(); return; }
+    const items = [...grid.querySelectorAll('button')];
+    let i = items.indexOf(document.activeElement);
+    if (i < 0) i = 0;
+    const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+    const moveBy = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: cols, ArrowUp: -cols }[k];
+    if (moveBy === undefined) return;
+    e.preventDefault();
+    const n = i + moveBy;
+    if (n >= 0 && n < items.length) items[n].focus({ preventScroll: true });
+  });
+
+  window.openBattle = open;
 })();
