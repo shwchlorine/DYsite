@@ -703,17 +703,15 @@ dialog h3 {
   overflow: visible;
 }
 
-/* ─────────── POKÉMON CARD ─────────── */
-.poke-card {
-  perspective: 1200px;
+/* ─────────── PLASTIC ID BADGE ─────────── */
+.badge {
   display: block;
   width: 100%;
-  max-width: 300px;
-  aspect-ratio: 5 / 7;
+  max-width: 260px;
   position: absolute;
-  top: 80px;
+  top: 170px;
   left: 50%;
-  transform-origin: 50% -80px;
+  transform-origin: 50% -170px;
   background: none;
   border: none;
   padding: 0;
@@ -725,193 +723,133 @@ dialog h3 {
   user-select: none;
   -webkit-user-select: none;
 }
-.poke-card:active { cursor: grabbing; }
-.poke-inner {
+.badge:active { cursor: grabbing; }
+
+/* the translucent sleeve */
+.badge-sleeve {
   position: relative;
   width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  padding: 14px 14px 12px;
-  background:
-    linear-gradient(140deg, #a893f5 0%, #7c5cfa 30%, #5b3fef 55%, #7c5cfa 80%, #a893f5 100%);
+  aspect-ratio: 5 / 7;
+  background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(255,255,255,0.25));
+  border-radius: 14px;
+  border: 1.5px solid rgba(23, 18, 37, 0.18);
   box-shadow:
-    0 30px 60px -18px rgba(91, 63, 239, 0.55),
-    0 10px 20px -8px rgba(23, 18, 37, 0.35),
-    inset 0 0 0 2px rgba(255,255,255,0.35),
-    inset 0 0 0 4px rgba(23, 18, 37, 0.25);
-  transform-style: preserve-3d;
-  transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    0 30px 60px -20px rgba(23, 18, 37, 0.35),
+    0 10px 25px -10px rgba(23, 18, 37, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 -2px 0 rgba(23, 18, 37, 0.05);
+  padding: 34px 14px 18px;
   overflow: hidden;
+  backdrop-filter: blur(1px);
 }
-.poke-card:hover .poke-inner {
-  /* hover disabled while lanyard physics runs */
-}
-.poke-card:active .poke-inner {
-  /* handled via JS */
-}
-
-.poke-shine {
+/* subtle plastic glare */
+.badge-sleeve::before {
+  content: "";
   position: absolute;
-  inset: 0;
+  top: -20%;
+  left: -30%;
+  width: 60%;
+  height: 140%;
+  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+  transform: rotate(15deg);
   pointer-events: none;
-  background:
-    linear-gradient(115deg,
-      transparent 20%,
-      rgba(255,255,255,0.4) 40%,
-      rgba(200, 180, 255, 0.35) 50%,
-      rgba(255,255,255,0.4) 60%,
-      transparent 80%);
-  background-size: 200% 200%;
-  background-position: 100% 100%;
-  mix-blend-mode: overlay;
-  transition: background-position 0.6s ease;
-  z-index: 3;
-}
-.poke-card:hover .poke-shine {
-  background-position: 0% 0%;
 }
 
-.poke-head {
+/* the two clip-holes at the top of the sleeve */
+.badge-holes {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 2px 8px;
-  color: #ece8f2;
+  pointer-events: none;
 }
-.poke-name {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
-  font-style: italic;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(23,18,37,0.4);
+.badge-holes span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    inset 0 1px 2px rgba(23, 18, 37, 0.4),
+    0 0 0 1.5px rgba(23, 18, 37, 0.2);
 }
-.poke-hp {
-  font-size: 0.75rem;
-  color: #fef08a;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-shadow: 0 1px 2px rgba(23,18,37,0.4);
-}
-.hp-label { font-size: 0.6rem; opacity: 0.8; margin-right: 2px; }
 
-.poke-portrait {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 3px solid #ece8f2;
-  background: var(--card);
-  box-shadow: inset 0 0 0 1px rgba(23,18,37,0.3);
-}
-.poke-portrait img {
+/* the printed card inside the sleeve */
+.badge-card {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
-  image-rendering: -webkit-optimize-contrast;
-}
-.poke-type {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fef08a, #fbbf24);
-  border: 2px solid #ece8f2;
+  background: #fdfcf9;
+  border-radius: 6px;
+  padding: 18px 16px 16px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 2px 6px rgba(23,18,37,0.4);
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: inset 0 0 0 1px rgba(23, 18, 37, 0.05);
 }
 
-.poke-species {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  color: #1e1832;
-  text-align: center;
+.badge-name {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  display: flex;
+  flex-direction: column;
+}
+.badge-first {
+  font-size: 2.1rem;
+  color: var(--fg);
+}
+.badge-last {
+  font-size: 2.3rem;
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 400;
+  margin-left: 22px;
+  margin-top: -4px;
+}
+
+.badge-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--serif);
+}
+.badge-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.72rem;
+  color: var(--muted);
   margin: 0;
-  padding: 4px 8px;
-  background: rgba(236, 232, 242, 0.75);
-  border-radius: 4px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  line-height: 1;
+}
+.badge-value {
+  font-size: 0.78rem;
+  color: var(--fg);
+  margin: 0 0 4px;
+  line-height: 1.25;
   font-weight: 500;
 }
-
-.poke-moves {
-  background: linear-gradient(180deg, #ece8f2 0%, #ddd5ea 100%);
-  border-radius: 10px;
-  padding: 10px 12px;
+.badge-chips {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  border: 1px solid rgba(23,18,37,0.15);
-}
-.move { display: flex; flex-direction: column; gap: 2px; }
-.move-head {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 8px;
-  align-items: center;
-  font-family: var(--serif);
-  font-weight: 600;
-  color: #1e1832;
-}
-.move-cost { font-size: 0.85rem; letter-spacing: -1px; color: #5b3fef; }
-.move-name { font-size: 0.85rem; font-style: italic; }
-.move-dmg {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #5b3fef;
-  font-family: var(--serif);
-}
-.move-text {
-  font-family: var(--sans);
-  font-size: 0.66rem;
-  color: #4a4256;
-  margin: 0;
-  line-height: 1.4;
-  padding-left: 2px;
-}
-
-.poke-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 8px;
-  color: #ece8f2;
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  gap: 6px;
   flex-wrap: wrap;
-  text-shadow: 0 1px 1px rgba(23,18,37,0.4);
+  gap: 4px;
+  margin-top: 2px;
 }
-.poke-footer b { color: #fef08a; font-weight: 700; }
-
-.poke-bottom {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 8px 0;
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: rgba(236, 232, 242, 0.85);
-  letter-spacing: 0.06em;
-  border-top: 1px dashed rgba(236, 232, 242, 0.4);
-  padding-top: 6px;
-  text-shadow: 0 1px 1px rgba(23,18,37,0.4);
+.bchip {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
-.poke-rarity { color: #fef08a; font-weight: 700; }
+.bchip.bingx { background: #1a1a2e; }
+.bchip.digiworld { background: #7c5cfa; }
+.bchip.wonghaus { background: #c8460c; }
 
 @media (max-width: 820px) {
-  .poke-card { max-width: 300px; }
+  .badge { max-width: 220px; top: 150px; transform-origin: 50% -150px; }
 }
