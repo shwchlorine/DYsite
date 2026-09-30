@@ -545,7 +545,7 @@ document.addEventListener('keydown', e => {
       ? text(num, '.metric-prefix') + (num.querySelector('.metric-value')?.dataset.target || '') + text(num, '.metric-suffix')
       : '';
     return {
-      name: text(p, 'h2'),
+      name: p.dataset.moveName || text(p, 'h2'), // short name for the move button if the card sets one
       years: text(p, '.proj-year'),
       role: text(p, '.proj-role'),
       desc: text(p, '.proj-desc'),
