@@ -36,47 +36,65 @@
       </p>
     </div>
 
-    <button type="button" class="poke-card" aria-label="Open about" onclick="document.getElementById('about').showModal()">
-      <div class="poke-inner">
-        <div class="poke-shine" aria-hidden="true"></div>
-        <div class="poke-head">
-          <span class="poke-name">Derrick Yen</span>
-          <span class="poke-hp"><span class="hp-label">HP</span> 220</span>
-        </div>
-        <div class="poke-portrait">
-          <img src="./derrick-pfp-hd.jpg" alt="Derrick Yen portrait" />
-          <span class="poke-type" aria-label="Growth type">⚡</span>
-        </div>
-        <p class="poke-species">GTM Operator · NYC</p>
-        <div class="poke-moves">
-          <div class="move">
-            <div class="move-head">
-              <span class="move-cost">⚡⚡</span>
-              <span class="move-name">Autonomous Outbound</span>
-              <span class="move-dmg">80</span>
+    <div class="badge-hero" aria-hidden="false">
+      <h1 class="name-behind"><span class="name-first">Derrick</span> <span class="name-last">Yen</span></h1>
+
+      <div class="lanyard" id="lanyard">
+        <svg class="lanyard-svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+          <defs>
+            <linearGradient id="strap" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1e1832"/>
+              <stop offset="0.5" stop-color="#3a2f5c"/>
+              <stop offset="1" stop-color="#1e1832"/>
+            </linearGradient>
+          </defs>
+          <path id="lanyard-path" d="M 200 0 Q 200 40 200 80" stroke="url(#strap)" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <circle id="lanyard-clip" cx="200" cy="80" r="6" fill="#5b3fef" stroke="#ece8f2" stroke-width="1.5"/>
+        </svg>
+
+        <button type="button" class="poke-card" id="pokeCard" aria-label="Open about" onclick="if(!window._dragged)document.getElementById('about').showModal();">
+          <div class="poke-inner">
+            <div class="poke-shine" aria-hidden="true"></div>
+            <div class="poke-head">
+              <span class="poke-name">Derrick Yen</span>
+              <span class="poke-hp"><span class="hp-label">HP</span> 220</span>
             </div>
-            <p class="move-text">Sends thousands of messages while you sleep. 20% reply rate.</p>
-          </div>
-          <div class="move">
-            <div class="move-head">
-              <span class="move-cost">⚡⚡⚡</span>
-              <span class="move-name">Category Definer</span>
-              <span class="move-dmg">150+</span>
+            <div class="poke-portrait">
+              <img src="./derrick-pfp-hd.jpg" alt="Derrick Yen portrait" draggable="false" />
+              <span class="poke-type" aria-label="Growth type">⚡</span>
             </div>
-            <p class="move-text">Zero-to-one motion. Ignores all resistance for one turn.</p>
+            <p class="poke-species">GTM Operator · NYC</p>
+            <div class="poke-moves">
+              <div class="move">
+                <div class="move-head">
+                  <span class="move-cost">⚡⚡</span>
+                  <span class="move-name">Autonomous Outbound</span>
+                  <span class="move-dmg">80</span>
+                </div>
+                <p class="move-text">Sends thousands of messages while you sleep. 20% reply rate.</p>
+              </div>
+              <div class="move">
+                <div class="move-head">
+                  <span class="move-cost">⚡⚡⚡</span>
+                  <span class="move-name">Category Definer</span>
+                  <span class="move-dmg">150+</span>
+                </div>
+                <p class="move-text">Zero-to-one motion. Ignores all resistance for one turn.</p>
+              </div>
+            </div>
+            <div class="poke-footer">
+              <span class="poke-weak">weak · <b>manual data entry</b></span>
+              <span class="poke-res">resist · <b>quota anxiety</b></span>
+              <span class="poke-retreat">retreat · <b>0</b></span>
+            </div>
+            <div class="poke-bottom">
+              <span class="poke-rarity">★ Holo Rare</span>
+              <span class="poke-num">001 / 151</span>
+            </div>
           </div>
-        </div>
-        <div class="poke-footer">
-          <span class="poke-weak">weak · <b>manual data entry</b></span>
-          <span class="poke-res">resist · <b>quota anxiety</b></span>
-          <span class="poke-retreat">retreat · <b>0</b></span>
-        </div>
-        <div class="poke-bottom">
-          <span class="poke-rarity">★ Holo Rare</span>
-          <span class="poke-num">001 / 151</span>
-        </div>
+        </button>
       </div>
-    </button>
+    </div>
 
     <div class="ticker" aria-label="Career highlights">
       <div class="ticker-track">

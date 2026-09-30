@@ -650,21 +650,82 @@ dialog h3 {
   * { transition-duration: 0.01s !important; }
 }
 
+/* ─────────── BADGE HERO (name behind + lanyard) ─────────── */
+.badge-hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(20px, 3vw, 40px) 0 clamp(40px, 6vw, 80px);
+  min-height: clamp(500px, 65vh, 720px);
+  overflow: visible;
+}
+
+.name-behind {
+  position: absolute;
+  bottom: clamp(20px, 4vw, 60px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(4rem, 20vw, 17rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding: 0 clamp(10px, 2vw, 30px);
+  pointer-events: none;
+  z-index: 1;
+  color: var(--fg);
+}
+.name-behind .name-first { font-weight: 500; font-style: normal; }
+.name-behind .name-last { font-style: italic; font-weight: 400; color: var(--accent); }
+
+.lanyard {
+  position: relative;
+  width: clamp(280px, 32vw, 400px);
+  height: 100%;
+  min-height: 500px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+.lanyard-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
 /* ─────────── POKÉMON CARD ─────────── */
 .poke-card {
   perspective: 1200px;
   display: block;
   width: 100%;
-  max-width: 360px;
+  max-width: 300px;
   aspect-ratio: 5 / 7;
-  margin: clamp(30px, 5vw, 60px) auto clamp(20px, 3vw, 40px);
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform-origin: 50% -80px;
   background: none;
   border: none;
   padding: 0;
-  cursor: pointer;
+  cursor: grab;
   font: inherit;
   color: inherit;
+  will-change: transform;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
+.poke-card:active { cursor: grabbing; }
 .poke-inner {
   position: relative;
   width: 100%;
@@ -686,10 +747,10 @@ dialog h3 {
   overflow: hidden;
 }
 .poke-card:hover .poke-inner {
-  transform: rotateY(-6deg) rotateX(3deg) translateY(-6px);
+  /* hover disabled while lanyard physics runs */
 }
 .poke-card:active .poke-inner {
-  transform: rotateY(-4deg) rotateX(2deg) translateY(-2px) scale(0.99);
+  /* handled via JS */
 }
 
 .poke-shine {
