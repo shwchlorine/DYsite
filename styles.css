@@ -587,7 +587,7 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 .deck-controls button:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
-#deckCount { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); min-width: 3.5em; text-align: center; }
+.deck-count { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); min-width: 3.5em; text-align: center; }
 .deck-hint { margin: 14px 0 0; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
 
 @media (max-width: 780px) {
@@ -604,24 +604,9 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
 
 /* ─────────── SIDE QUEST: Not Just Sundays ─────────── */
 /* A standalone "secret rare" card, kept out of the work deck and the battle. */
-#sidequest { margin: clamp(50px, 8vw, 100px) 0 0; }
-.sq-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 90px);
-  align-items: center;
-}
-.sq-card {
-  --wc-w: clamp(320px, 27vw, 360px);
-  width: calc(var(--wc-w) + 40px);
-  display: flex;
-  justify-content: flex-start;
-}
-.sq-card .wcard { position: relative; cursor: default; transform: rotate(-2deg); }
-.sq-card .wcard:hover { transform: rotate(0deg) translateY(-4px); }
-
-/* gold frame + NJS green and cream */
-.wcard.wc-njs {
+#sidequest { margin: clamp(50px, 8vw, 100px) 0; }
+/* side quests get a gold "secret rare" frame; NJS uses its green and cream */
+.wcard.wc-sq {
   background: linear-gradient(135deg, #f7e7ae 0%, #c79a3e 22%, #fff4c9 44%, #b3852b 68%, #f3d98f 100%);
   box-shadow:
     inset 0 0 0 1px rgba(90, 60, 10, 0.35),
@@ -635,7 +620,7 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   --scrim: 3, 34, 21;
   box-shadow: inset 0 0 0 1.5px rgba(243, 217, 143, 0.45);
 }
-.wc-njs .wc-stage { background: linear-gradient(180deg, #fff4c9, #d7b25a); box-shadow: inset 0 0 0 1px rgba(90,60,10,0.4); color: #3b2a06; }
+.wc-sq .wc-stage { background: linear-gradient(180deg, #fff4c9, #d7b25a); box-shadow: inset 0 0 0 1px rgba(90,60,10,0.4); color: #3b2a06; }
 .wc-njs .wc-energy, .wc-njs .wc-cost i {
   background:
     radial-gradient(circle at 50% 50%, #fff 0 18%, transparent 19%),
@@ -651,6 +636,8 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   box-shadow: 0 0 0 1px rgba(243, 217, 143, 0.55), 0 0 2em rgba(243, 217, 143, 0.35), 0 1.2em 1.6em rgba(0, 0, 0, 0.45);
 }
 
+.sq-copy { margin-bottom: 28px; }
+.sq-copy[data-card="0"] { --accent: #0d5c3a; }
 .sq-copy h2 {
   margin: 0;
   font-family: var(--serif);
@@ -671,8 +658,8 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
 .sq-desc b { font-weight: 600; }
 .sq-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(9.5em, 1fr));
+  gap: 18px 20px;
   margin: 28px 0 0;
   max-width: 560px;
 }
@@ -682,8 +669,9 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   font-family: var(--serif);
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
   line-height: 1;
+  white-space: nowrap;
   color: var(--accent);
 }
 .sq-stats dt { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
@@ -703,9 +691,6 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
 .sq-link:hover { background: var(--accent); transform: translateY(-2px); }
 
 @media (max-width: 780px) {
-  .sq-layout { grid-template-columns: 1fr; justify-items: center; gap: 28px; }
-  .sq-card { --wc-w: min(84vw, 340px); width: auto; justify-content: center; }
-  .sq-copy { width: 100%; }
   .sq-stats { gap: 12px; }
 }
 

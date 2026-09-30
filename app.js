@@ -62,7 +62,7 @@
   }
 
   // re-count whenever a work card comes to the top of the deck
-  document.querySelectorAll('.project').forEach(card => {
+  document.querySelectorAll('.wcard').forEach(card => {
     card.addEventListener('card:shown', () => {
       const el = card.querySelector('.metric-value');
       if (!el) return;
@@ -73,36 +73,37 @@
   });
 })();
 
-// ─────────── WORK DECK ───────────
-// The work entries are a stack of trading cards. Drag or click the top card
-// to send it to the back; ← / → (or the buttons / index) flip through.
-(() => {
-  const deck = document.getElementById('deck');
+// ─────────── CARD DECKS ───────────
+// Selected Work and Side Quests are stacks of trading cards. Drag or click
+// the top card to send it to the back; ← / → (or the buttons / index) flip.
+// An optional [data-card="i"] panel in the same wrapper follows the top card.
+function initDeck(wrap) {
+  const deck = wrap.querySelector('.deck');
   if (!deck) return;
   const cards = [...deck.querySelectorAll('.wcard')];
   const n = cards.length;
   if (!n) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wait = (ms) => new Promise(r => setTimeout(r, reduce ? 0 : ms));
-  const count = document.getElementById('deckCount');
-  const index = document.getElementById('deckIndex');
+  const count = wrap.querySelector('.deck-count');
+  const index = wrap.querySelector('.deck-index');
+  const panels = [...wrap.querySelectorAll('[data-card]')];
   let order = cards.map((_, i) => i); // order[0] is the top card
   let busy = false;
 
-  // index list built from the cards themselves
-  const indexButtons = cards.map((c, i) => {
+  const indexButtons = index ? cards.map((c, i) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
     b.type = 'button';
     const num = document.createElement('span'); num.className = 'n'; num.textContent = String(i + 1).padStart(2, '0');
     const t = document.createElement('span'); t.className = 't'; t.textContent = c.querySelector('h2').textContent;
-    const y = document.createElement('span'); y.className = 'y'; y.textContent = c.querySelector('.proj-year').textContent;
+    const y = document.createElement('span'); y.className = 'y'; y.textContent = c.querySelector('.proj-year')?.textContent || '';
     b.append(num, t, y);
     b.addEventListener('click', () => goTo(i));
     li.append(b);
-    index?.append(li);
+    index.append(li);
     return b;
-  });
+  }) : [];
 
   function slot(p) {
     if (p === 0) return 'translate(0px, 0px) rotate(0deg) scale(1)';
@@ -122,11 +123,12 @@
     const topI = order[0];
     if (count) count.textContent = `${topI + 1} / ${n}`;
     indexButtons.forEach((b, i) => b.setAttribute('aria-current', i === topI ? 'true' : 'false'));
+    panels.forEach(pn => { pn.hidden = +pn.dataset.card !== topI; });
   }
   function shown() { cards[order[0]].dispatchEvent(new Event('card:shown')); }
 
   async function next(side = -1) {
-    if (busy) return;
+    if (busy || n < 2) return;
     busy = true;
     const top = cards[order[0]];
     if (!reduce) {
@@ -143,7 +145,7 @@
     busy = false;
   }
   async function prev() {
-    if (busy) return;
+    if (busy || n < 2) return;
     busy = true;
     const ci = order.pop();
     order.unshift(ci);
@@ -198,10 +200,10 @@
     drag = null;
     try { card.releasePointerCapture(e.pointerId); } catch (_) {}
     const speed = Math.abs(dx) / Math.max(1, performance.now() - t);
-    if (e.type === 'pointerup' && moved < 6) { next(-1); return; }          // a click flips
+    if (e.type === 'pointerup' && moved < 6) { card.classList.remove('dragging'); next(-1); return; } // a click flips
     if (Math.abs(dx) > 90 || (Math.abs(dx) > 30 && speed > 0.6)) { next(Math.sign(dx) || -1); return; }
     card.classList.remove('dragging');
-    layout();                                                                // snap back
+    layout();                                                                                // snap back
   };
   deck.addEventListener('pointerup', endDrag);
   deck.addEventListener('pointercancel', endDrag);
@@ -210,22 +212,12 @@
     if (e.key === 'ArrowRight') { e.preventDefault(); next(-1); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
   });
-  document.getElementById('deckNext')?.addEventListener('click', () => next(-1));
-  document.getElementById('deckPrev')?.addEventListener('click', () => prev());
+  wrap.querySelector('.deck-next')?.addEventListener('click', () => next(-1));
+  wrap.querySelector('.deck-prev')?.addEventListener('click', () => prev());
 
   layout();
-})();
-
-// Side Quest card: foil follows the pointer
-(() => {
-  const card = document.querySelector('#sidequest .wcard');
-  if (!card) return;
-  card.addEventListener('pointermove', (e) => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--lx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
-    card.style.setProperty('--ly', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
-  });
-})();
+}
+document.querySelectorAll('[data-deck]').forEach(initDeck);
 
 // ESC to close dialog
 document.addEventListener('keydown', e => {
@@ -737,7 +729,7 @@ document.addEventListener('keydown', e => {
     burst(foe);
     foe.classList.remove('hit', 'shake'); void foe.offsetWidth;
     foe.classList.add('hit', 'shake');
-    setHp(hp - 25);
+    setHp(hp - Math.ceil(100 / moves.length));
     await wait(900);
     if (!alive()) return;
     me.classList.remove('lunge');
