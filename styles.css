@@ -1,16 +1,16 @@
 /* Derrick Yen — editorial GTM portfolio */
 :root {
-  --bg: #f0eadf;
-  --bg-warm: #e8e0d1;
-  --fg: #171512;
-  --muted: #6f6a62;
-  --accent: #c8460c;
-  --accent-2: #8b5cf6;
-  --card: #1a1a1a;
-  --card-fg: #f0eadf;
-  --card-warm: #ecdccb;
-  --card-warm-fg: #2a1f18;
-  --border: rgba(23, 21, 18, 0.12);
+  --bg: #ece8f2;
+  --bg-warm: #ddd5ea;
+  --fg: #171225;
+  --muted: #6b6577;
+  --accent: #5b3fef;
+  --accent-2: #3b82f6;
+  --card: #1a1730;
+  --card-fg: #ece8f2;
+  --card-warm: #d8cfe8;
+  --card-warm-fg: #1e1832;
+  --border: rgba(23, 18, 37, 0.14);
   --serif: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -589,7 +589,7 @@ dialog .bio p {
 dialog .bio p b { font-weight: 500; color: var(--accent); }
 dialog .bio .origin {
   padding: 14px 18px;
-  background: rgba(200, 70, 12, 0.08);
+  background: rgba(91, 63, 239, 0.08);
   border-left: 3px solid var(--accent);
   border-radius: 4px;
   margin-top: 20px;
