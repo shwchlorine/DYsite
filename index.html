@@ -23,7 +23,7 @@
 
 <main>
   <section class="hero" aria-label="Introduction">
-    <div class="hero-top">
+    <div class="stage" id="stage">
       <p class="intro">
         I build growth engines for<br />
         <span class="rotator" aria-live="polite">
@@ -34,63 +34,105 @@
         </span>
         <button type="button" class="more" aria-haspopup="dialog" onclick="document.getElementById('about').showModal()">[more]</button>
       </p>
-    </div>
+      <p class="now">Currently AI GTM Lead<br />@ Alchemy, New York</p>
 
-    <div class="badge-hero" aria-hidden="false">
       <h1 class="name-behind"><span class="name-first">Derrick</span> <span class="name-last">Yen</span></h1>
 
-      <div class="lanyard" id="lanyard">
-        <svg class="lanyard-svg" viewBox="0 0 400 700" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
-          <defs>
-            <linearGradient id="strap" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#0a0812"/>
-              <stop offset="0.4" stop-color="#1e1832"/>
-              <stop offset="0.5" stop-color="#2a2145"/>
-              <stop offset="0.6" stop-color="#1e1832"/>
-              <stop offset="1" stop-color="#0a0812"/>
-            </linearGradient>
-            <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#e2e0e6"/>
-              <stop offset="0.5" stop-color="#a8a4b0"/>
-              <stop offset="1" stop-color="#6b6577"/>
-            </linearGradient>
-          </defs>
-          <!-- Y-shape strap: two sides meeting at clip -->
-          <path id="strap-left" d="M 140 0 Q 165 60 200 140" stroke="url(#strap)" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <path id="strap-right" d="M 260 0 Q 235 60 200 140" stroke="url(#strap)" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <!-- alligator clip: a small metal rectangle + hook -->
-          <g id="clip-group">
-            <rect id="clip-body" x="192" y="135" width="16" height="22" rx="2" fill="url(#metal)" stroke="#4a4256" stroke-width="0.8"/>
-            <path id="clip-hook" d="M 200 157 L 200 168" stroke="url(#metal)" stroke-width="3" stroke-linecap="round"/>
-            <circle id="clip-ring" cx="200" cy="170" r="4" fill="none" stroke="url(#metal)" stroke-width="2"/>
-          </g>
-        </svg>
+      <!-- strap shadow sits under the card, strap + clip sit over it -->
+      <svg class="strap-layer strap-shadow" id="strapShadow" aria-hidden="true">
+        <defs><filter id="blur6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter></defs>
+        <g filter="url(#blur6)">
+          <path class="sh-l" d="" />
+          <path class="sh-r" d="" />
+        </g>
+      </svg>
 
-        <button type="button" class="badge" id="pokeCard" aria-label="Open about" onclick="if(!window._dragged)document.getElementById('about').showModal();">
-          <!-- plastic sleeve with two holes for the clip -->
-          <div class="badge-sleeve">
-            <div class="badge-holes" aria-hidden="true">
-              <span></span><span></span>
-            </div>
-            <div class="badge-card">
-              <div class="badge-name">
-                <span class="badge-first">Derrick</span>
-                <span class="badge-last">Yen</span>
+      <button type="button" class="badge" id="badge" aria-label="Derrick Yen trading card. Open about.">
+        <div class="sleeve" id="sleeve">
+          <div class="sleeve-top" aria-hidden="true">
+            <span class="hole"></span><span class="slot"></span><span class="hole"></span>
+          </div>
+
+          <div class="tcg" id="tcg">
+            <div class="tcg-face">
+              <div class="tcg-sky" aria-hidden="true">
+                <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span>
+                <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✧</span>
+                <span class="spark s4">✦</span><span class="spark s5">✧</span><span class="spark s6">✦</span>
+                <span class="hill h1"></span><span class="hill h2"></span>
               </div>
-              <div class="badge-meta">
-                <p class="badge-label">Currently</p>
-                <p class="badge-value">AI GTM Lead @ Alchemy</p>
-                <p class="badge-label">Previously</p>
-                <div class="badge-chips">
-                  <span class="bchip bingx">BingX</span>
-                  <span class="bchip digiworld">Digiworld</span>
-                  <span class="bchip wonghaus">Wonghaus</span>
+
+              <header class="tcg-head">
+                <span class="tcg-stage">BASIC</span>
+                <span class="tcg-name">Derrick Yen <i>gtm</i></span>
+                <span class="tcg-hp"><small>HP</small>220</span>
+                <span class="energy" title="Psychic"></span>
+              </header>
+
+              <div class="tcg-portrait">
+                <img src="./pfp.jpg" alt="Illustrated portrait of Derrick Yen" width="400" height="400" draggable="false" />
+              </div>
+
+              <div class="tcg-body">
+                <div class="tcg-move">
+                  <p class="move-title"><span class="ability-tag">Ability</span> Autopilot</p>
+                  <p class="move-text">Once during your turn, deploy a fully autonomous SDR bot across every channel. Your reply rate goes up 20%.</p>
+                </div>
+                <div class="tcg-move">
+                  <p class="move-title"><span class="cost"><span class="energy sm"></span><span class="energy sm"></span><span class="energy sm"></span></span> Pipeline Surge <span class="dmg">10M+</span></p>
+                  <p class="move-text">Run outbound, inbound, and partnerships at once. Add $10M+ to your pipeline.</p>
                 </div>
               </div>
+
+              <div class="tcg-stats">
+                <span>weakness <b>☕ ×2</b></span>
+                <span>resistance <b>cold calls −30</b></span>
+                <span>retreat <b class="retreat"><span class="energy xs"></span></b></span>
+              </div>
+
+              <div class="tcg-foot">
+                <div class="tcg-meta">
+                  <span>Illus. Derrick Yen</span>
+                  <span class="set"><b>USC</b> 115/100 ✦</span>
+                </div>
+                <div class="tcg-rule">
+                  <b>Previously</b>
+                  <span>BingX · Digiworld · Wonghaus</span>
+                </div>
+              </div>
+              <div class="holo" aria-hidden="true"></div>
+              <div class="glare" aria-hidden="true"></div>
             </div>
           </div>
-        </button>
-      </div>
+          <div class="sleeve-glare" aria-hidden="true"></div>
+        </div>
+      </button>
+
+      <svg class="strap-layer strap-front" id="strapFront" aria-hidden="true">
+        <defs>
+          <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8d8a93"/>
+            <stop offset="0.35" stop-color="#f4f3f6"/>
+            <stop offset="0.6" stop-color="#b9b6bf"/>
+            <stop offset="1" stop-color="#6e6a75"/>
+          </linearGradient>
+        </defs>
+        <path class="strap st-l" d="" />
+        <path class="strap-sheen st-l2" d="" />
+        <path class="strap st-r" d="" />
+        <path class="strap-sheen st-r2" d="" />
+        <g id="clip">
+          <!-- fold where both strap ends meet -->
+          <rect x="-11" y="-9" width="22" height="12" rx="3" fill="#15131a"/>
+          <!-- crimp band -->
+          <rect x="-9" y="1" width="18" height="9" rx="2" fill="url(#metal)" stroke="#5d5963" stroke-width="0.6"/>
+          <!-- swivel barrel -->
+          <rect x="-3" y="10" width="6" height="7" rx="1.5" fill="url(#metal)" stroke="#5d5963" stroke-width="0.6"/>
+          <!-- hook shank; its length is set from JS -->
+          <path id="clipHook" d="M 0 17 L 0 40" stroke="url(#metal)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+          <path id="clipHookEdge" d="M 0 17 L 0 40" stroke="#5d5963" stroke-width="0.6" stroke-linecap="round" fill="none" opacity="0.6"/>
+        </g>
+      </svg>
     </div>
 
     <div class="ticker" aria-label="Career highlights">
