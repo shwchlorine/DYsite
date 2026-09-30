@@ -536,7 +536,10 @@ document.addEventListener('keydown', e => {
   const text = (root, sel) => (root.querySelector(sel)?.textContent || '').replace(/\s+/g, ' ').trim();
 
   // ── data from the page ──
-  const moves = [...document.querySelectorAll('#work .project')].map(p => {
+  // FIGHT moves: every card marked data-battle, in that order
+  const moves = [...document.querySelectorAll('[data-battle]')]
+    .sort((a, b) => a.dataset.battle - b.dataset.battle)
+    .map(p => {
     const num = p.querySelector('.metric-num');
     const metric = num
       ? text(num, '.metric-prefix') + (num.querySelector('.metric-value')?.dataset.target || '') + text(num, '.metric-suffix')
