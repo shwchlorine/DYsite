@@ -44,9 +44,10 @@
       const p = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - p, 3);
       const val = target * eased;
-      el.textContent = target >= 10 ? Math.floor(val) : val.toFixed(1);
+      const dp = el.dataset.decimals != null ? +el.dataset.decimals : (target >= 10 || Number.isInteger(target) ? 0 : 1);
+      el.textContent = target >= 10 && el.dataset.decimals == null ? Math.floor(val) : val.toFixed(dp || (target < 10 ? 1 : 0));
       if (p < 1) requestAnimationFrame(step);
-      else el.textContent = target >= 10 ? String(target) : (Number.isInteger(target) ? String(target) : target.toFixed(1));
+      else el.textContent = target.toFixed(dp);
     };
     requestAnimationFrame(step);
   };
@@ -213,6 +214,17 @@
   document.getElementById('deckPrev')?.addEventListener('click', () => prev());
 
   layout();
+})();
+
+// Side Quest card: foil follows the pointer
+(() => {
+  const card = document.querySelector('#sidequest .wcard');
+  if (!card) return;
+  card.addEventListener('pointermove', (e) => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--lx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
+    card.style.setProperty('--ly', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
+  });
 })();
 
 // ESC to close dialog

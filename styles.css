@@ -602,6 +602,113 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   .wcard, .wcard.flying { transition: none; }
 }
 
+/* ─────────── SIDE QUEST: Not Just Sundays ─────────── */
+/* A standalone "secret rare" card, kept out of the work deck and the battle. */
+#sidequest { margin: clamp(50px, 8vw, 100px) 0 0; }
+.sq-layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 90px);
+  align-items: center;
+}
+.sq-card {
+  --wc-w: clamp(320px, 27vw, 360px);
+  width: calc(var(--wc-w) + 40px);
+  display: flex;
+  justify-content: flex-start;
+}
+.sq-card .wcard { position: relative; cursor: default; transform: rotate(-2deg); }
+.sq-card .wcard:hover { transform: rotate(0deg) translateY(-4px); }
+
+/* gold frame + NJS green and cream */
+.wcard.wc-njs {
+  background: linear-gradient(135deg, #f7e7ae 0%, #c79a3e 22%, #fff4c9 44%, #b3852b 68%, #f3d98f 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(90, 60, 10, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 22px 48px -18px rgba(40, 28, 6, 0.5),
+    0 0 0 1px rgba(199, 154, 62, 0.25);
+}
+.wc-njs .wc-face {
+  --ink: #f6efd6;
+  --ink-soft: rgba(246, 239, 214, 0.78);
+  --scrim: 3, 34, 21;
+  box-shadow: inset 0 0 0 1.5px rgba(243, 217, 143, 0.45);
+}
+.wc-njs .wc-stage { background: linear-gradient(180deg, #fff4c9, #d7b25a); box-shadow: inset 0 0 0 1px rgba(90,60,10,0.4); color: #3b2a06; }
+.wc-njs .wc-energy, .wc-njs .wc-cost i {
+  background:
+    radial-gradient(circle at 50% 50%, #fff 0 18%, transparent 19%),
+    radial-gradient(circle at 35% 30%, #fff1b8, #d6a53d 60%, #8a6414);
+}
+.wc-njs .wc-years { font-family: var(--mono); font-style: normal; font-size: 0.95em; }
+.wc-njs .wc-link { color: #f3d98f; }
+.wc-subject.njs { top: 17%; width: 66%; }
+.wc-subject.njs img {
+  border-radius: 0.45em;
+  transform: rotate(-4deg);
+  filter: none;
+  box-shadow: 0 0 0 1px rgba(243, 217, 143, 0.55), 0 0 2em rgba(243, 217, 143, 0.35), 0 1.2em 1.6em rgba(0, 0, 0, 0.45);
+}
+
+.sq-copy h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.sq-role {
+  margin: 12px 0 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+.sq-desc { margin: 18px 0 0; max-width: 560px; font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.6; color: var(--fg); }
+.sq-desc b { font-weight: 600; }
+.sq-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 28px 0 0;
+  max-width: 560px;
+}
+.sq-stats div { display: flex; flex-direction: column-reverse; gap: 6px; border-top: 1px solid var(--border); padding-top: 12px; }
+.sq-stats dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1;
+  color: var(--accent);
+}
+.sq-stats dt { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.sq-link {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.sq-link:hover { background: var(--accent); transform: translateY(-2px); }
+
+@media (max-width: 780px) {
+  .sq-layout { grid-template-columns: 1fr; justify-items: center; gap: 28px; }
+  .sq-card { --wc-w: min(84vw, 340px); width: auto; justify-content: center; }
+  .sq-copy { width: 100%; }
+  .sq-stats { gap: 12px; }
+}
+
 /* ─────────── MANIFESTO ─────────── */
 .manifesto {
   margin: clamp(60px, 10vw, 120px) 0;
