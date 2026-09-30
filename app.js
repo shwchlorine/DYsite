@@ -348,7 +348,7 @@ document.addEventListener('keydown', e => {
   const hud = $('btHud'), line = $('btLine'), textBox = $('btText');
   const menu = $('btMenu'), movesEl = $('btMoves'), info = $('btMoveInfo');
   const arena = $('btArena'), foe = $('foe'), me = $('me'), ball = $('ball');
-  const foeHp = $('foeHp'), meExp = $('meExp'), fx = $('fx');
+  const foeHp = $('foeHp'), fx = $('fx');
   const bagPanel = $('bagPanel'), aboutPanel = $('aboutPanel');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wait = (ms) => new Promise(r => setTimeout(r, reduce ? Math.min(ms, 120) : ms));
@@ -493,7 +493,6 @@ document.addEventListener('keydown', e => {
     used.clear();
     movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
     setHp(100);
-    meExp.style.setProperty('--exp', '0%');
     me.className = 'bt-me';
     me.style.transform = '';
     ball.className = 'bt-ball';
@@ -553,9 +552,7 @@ document.addEventListener('keydown', e => {
       foe.classList.add('faint');
       await wait(650);
       await say('QUOTA fainted!');
-      meExp.style.setProperty('--exp', '100%');
       await say('DERRICK gained EXP. Points!');
-      meExp.style.setProperty('--exp', '0%');
       foe.classList.remove('faint', 'hit');
       used.clear();
       movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
