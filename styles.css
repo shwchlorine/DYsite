@@ -132,25 +132,6 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   .rot-word { white-space: normal; }
 }
 
-.hero .more {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-left: 8px;
-  font: inherit;
-  color: var(--fg);
-  cursor: pointer;
-  font-family: var(--mono);
-  font-size: 0.8em;
-  font-style: normal;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-.hero .more:hover { opacity: 1; color: var(--accent); }
-
 .hero .education {
   font-family: var(--mono);
   font-size: 0.85rem;

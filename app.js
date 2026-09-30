@@ -12,7 +12,7 @@
     requestAnimationFrame(tick);
   }
   tick();
-  const hoverSel = 'a, button, .project, .tenets li, .more';
+  const hoverSel = 'a, button, .project, .tenets li';
   document.querySelectorAll(hoverSel).forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
@@ -94,7 +94,7 @@ document.addEventListener('keydown', e => {
   const name = stage && stage.querySelector('.name-behind');
   if (!stage || !ball || !spin || !name) return;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (matchMedia('(hover: none)').matches) hint.textContent = '[tap to open]';
+  if (matchMedia('(hover: none)').matches) hint.textContent = '[tap to catch]';
 
   const GRAVITY = 2600;     // px/s²
   const BOUNCE = 0.42;      // restitution off the name
