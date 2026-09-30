@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./styles.css?v=26" />
+<link rel="stylesheet" href="./styles.css?v=30" />
 <link rel="icon" href="./favicon.ico" />
 </head>
 <body>
@@ -226,85 +226,128 @@
   <section id="work" aria-label="Selected work">
     <p class="section-label">Selected Work · 2021 – Present</p>
 
-    <a class="project" href="https://www.alchemy.com" target="_blank" rel="noopener" data-metric="10" data-metric-suffix="M+" data-metric-prefix="$" data-metric-label="pipeline generated">
-      <div class="proj-inner">
-        <div class="proj-copy">
-          <div class="proj-head">
+    <div class="work-layout">
+      <div class="deck" id="deck" tabindex="0" role="group" aria-roledescription="card deck" aria-label="Selected work. Press the left and right arrow keys to flip through the cards.">
+      <article class="project wcard wc-alchemy" data-i="0">
+        <div class="wc-face">
+          <header class="wc-head">
+            <span class="proj-year wc-stage">2024 → Now</span>
             <h2>Alchemy</h2>
-            <span class="proj-year">2024 → Now</span>
+            <span class="wc-energy" aria-hidden="true"></span>
+          </header>
+          <div class="wc-art"><img class="wc-logo" src="./logos/alchemy.svg" alt="Alchemy logo" width="75" height="74" draggable="false" /></div>
+          <p class="proj-role wc-strip">AI GTM Lead · SDR Manager · SDR</p>
+          <div class="wc-move">
+            <p class="wc-move-title">
+              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="metric-label">pipeline generated</span>
+              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="10">0</span><span class="metric-suffix">M+</span></span>
+            </p>
+            <p class="proj-desc">Crypto infrastructure platform. Engineered a fully autonomous SDR bot spanning outbound, reply, and analytics. Leading the AI-for-GTM strategy across the company and running the SDR team at 115% quota for three straight quarters.</p>
           </div>
-          <p class="proj-role">AI GTM Lead · SDR Manager · SDR</p>
-          <p class="proj-desc">Crypto infrastructure platform. Engineered a fully autonomous SDR bot spanning outbound, reply, and analytics. Leading the AI-for-GTM strategy across the company and running the SDR team at 115% quota for three straight quarters.</p>
-          <ul class="proj-chips">
-            <li>Hyperliquid</li><li>Monad</li><li>Phantom</li><li>Bank of America</li><li>Franklin Templeton</li>
-          </ul>
+          <ul class="proj-chips"><li>Hyperliquid</li><li>Monad</li><li>Phantom</li><li>Bank of America</li><li>Franklin Templeton</li></ul>
+          <footer class="wc-foot">
+            <span>Illus. Derrick Yen</span>
+            <a class="wc-link" href="https://www.alchemy.com" target="_blank" rel="noopener">alchemy.com ↗</a>
+            <span class="wc-num">01/04 ✦</span>
+          </footer>
+          <div class="wc-holo" aria-hidden="true"></div>
+          <div class="wc-glare" aria-hidden="true"></div>
         </div>
-        <div class="proj-metric">
-          <div class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="10">0</span><span class="metric-suffix">M+</span></div>
-          <div class="metric-label">pipeline generated</div>
-        </div>
-      </div>
-    </a>
-
-    <a class="project" href="#" onclick="return false;" data-metric="1" data-metric-prefix="$" data-metric-suffix="M/mo">
-      <div class="proj-inner">
-        <div class="proj-copy">
-          <div class="proj-head">
+      </article>
+      <article class="project wcard wc-digiworld" data-i="1">
+        <div class="wc-face">
+          <header class="wc-head">
+            <span class="proj-year wc-stage">2022 → 2024</span>
             <h2>Digiworld</h2>
-            <span class="proj-year">2022 → 2024</span>
+            <span class="wc-energy" aria-hidden="true"></span>
+          </header>
+          <div class="wc-art"><img class="wc-photo" src="./logos/digiworld.jpg" alt="Digiworld logo on a glowing card" width="720" height="456" draggable="false" /></div>
+          <p class="proj-role wc-strip">Co-Founder · Managing Partner</p>
+          <div class="wc-move">
+            <p class="wc-move-title">
+              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="metric-label">membership revenue</span>
+              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M/mo</span></span>
+            </p>
+            <p class="proj-desc">Private Web3 members' consortium. Built the drop mechanic, the community engine, and the alpha desk that generated $2.5M+ in member earnings. Ran an 800-person waitlist, an NFT that sold out at 1.1 ETH in a day, and a 10K social community.</p>
           </div>
-          <p class="proj-role">Co-Founder · Managing Partner</p>
-          <p class="proj-desc">Private Web3 members' consortium. Built the drop mechanic, the community engine, and the alpha desk that generated $2.5M+ in member earnings. Ran an 800-person waitlist, an NFT that sold out at 1.1 ETH in a day, and a 10K social community.</p>
-          <ul class="proj-chips">
-            <li>Whop</li><li>NFT</li><li>Community</li><li>Discord</li><li>Alpha</li>
-          </ul>
+          <ul class="proj-chips"><li>Whop</li><li>NFT</li><li>Community</li><li>Discord</li><li>Alpha</li></ul>
+          <footer class="wc-foot">
+            <span>Illus. Derrick Yen</span>
+            
+            <span class="wc-num">02/04 ✦</span>
+          </footer>
+          <div class="wc-holo" aria-hidden="true"></div>
+          <div class="wc-glare" aria-hidden="true"></div>
         </div>
-        <div class="proj-metric">
-          <div class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M/mo</span></div>
-          <div class="metric-label">membership revenue</div>
-        </div>
-      </div>
-    </a>
-
-    <a class="project" href="#" onclick="return false;" data-metric="100" data-metric-prefix="$" data-metric-suffix="M+/mo">
-      <div class="proj-inner">
-        <div class="proj-copy">
-          <div class="proj-head">
+      </article>
+      <article class="project wcard wc-bingx" data-i="2">
+        <div class="wc-face">
+          <header class="wc-head">
+            <span class="proj-year wc-stage">2023 → 2024</span>
             <h2>BingX Exchange</h2>
-            <span class="proj-year">2023 → 2024</span>
+            <span class="wc-energy" aria-hidden="true"></span>
+          </header>
+          <div class="wc-art"><img class="wc-logo wide" src="./logos/bingx.svg" alt="BingX logo" width="76" height="24" draggable="false" /></div>
+          <p class="proj-role wc-strip">Business Development Manager</p>
+          <div class="wc-move">
+            <p class="wc-move-title">
+              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="metric-label">volume onboarded</span>
+              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="100">0</span><span class="metric-suffix">M+/mo</span></span>
+            </p>
+            <p class="proj-desc">Onboarded and oversaw $1M+ portfolios that compounded into $100M+ monthly volume. Kept a 100% client retention rate, beat sales targets by 50%, and built the reporting cadence that shifted 40% of the desk's decisions.</p>
           </div>
-          <p class="proj-role">Business Development Manager</p>
-          <p class="proj-desc">Onboarded and oversaw $1M+ portfolios that compounded into $100M+ monthly volume. Kept a 100% client retention rate, beat sales targets by 50%, and built the reporting cadence that shifted 40% of the desk's decisions.</p>
-          <ul class="proj-chips">
-            <li>Exchange BD</li><li>Whale accounts</li><li>Retention</li>
-          </ul>
+          <ul class="proj-chips"><li>Exchange BD</li><li>Whale accounts</li><li>Retention</li></ul>
+          <footer class="wc-foot">
+            <span>Illus. Derrick Yen</span>
+            
+            <span class="wc-num">03/04 ✦</span>
+          </footer>
+          <div class="wc-holo" aria-hidden="true"></div>
+          <div class="wc-glare" aria-hidden="true"></div>
         </div>
-        <div class="proj-metric">
-          <div class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="100">0</span><span class="metric-suffix">M+/mo</span></div>
-          <div class="metric-label">volume onboarded</div>
-        </div>
-      </div>
-    </a>
-
-    <a class="project" href="#" onclick="return false;" data-metric="1" data-metric-prefix="$" data-metric-suffix="M">
-      <div class="proj-inner">
-        <div class="proj-copy">
-          <div class="proj-head">
+      </article>
+      <article class="project wcard wc-wonghaus" data-i="3">
+        <div class="wc-face">
+          <header class="wc-head">
+            <span class="proj-year wc-stage">2021</span>
             <h2>Wonghaus Ventures</h2>
-            <span class="proj-year">2021</span>
+            <span class="wc-energy" aria-hidden="true"></span>
+          </header>
+          <div class="wc-art"><img class="wc-logo" src="./logos/wonghaus.png" alt="Wonghaus Ventures logo" width="405" height="399" draggable="false" /></div>
+          <p class="proj-role wc-strip">Project Manager · Partnerships & Digital Strategy</p>
+          <div class="wc-move">
+            <p class="wc-move-title">
+              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="metric-label">affiliate revenue</span>
+              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M</span></span>
+            </p>
+            <p class="proj-desc">Ran partnerships and digital strategy for a DTC growth studio. Generated $1M in affiliate revenue across 30+ vendor contracts, wrote a 150-module founder playbook that hit $100K in its first 30-day launch, and grew sales 15% by rebuilding the digital stack.</p>
           </div>
-          <p class="proj-role">Project Manager · Partnerships & Digital Strategy</p>
-          <p class="proj-desc">Ran partnerships and digital strategy for a DTC growth studio. Generated $1M in affiliate revenue across 30+ vendor contracts, wrote a 150-module founder playbook that hit $100K in its first 30-day launch, and grew sales 15% by rebuilding the digital stack.</p>
-          <ul class="proj-chips">
-            <li>DTC</li><li>Affiliate</li><li>Playbooks</li>
-          </ul>
+          <ul class="proj-chips"><li>DTC</li><li>Affiliate</li><li>Playbooks</li></ul>
+          <footer class="wc-foot">
+            <span>Illus. Derrick Yen</span>
+            
+            <span class="wc-num">04/04 ✦</span>
+          </footer>
+          <div class="wc-holo" aria-hidden="true"></div>
+          <div class="wc-glare" aria-hidden="true"></div>
         </div>
-        <div class="proj-metric">
-          <div class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M</span></div>
-          <div class="metric-label">affiliate revenue</div>
-        </div>
+      </article>
       </div>
-    </a>
+
+      <div class="deck-side">
+        <ol class="deck-index" id="deckIndex"></ol>
+        <div class="deck-controls">
+          <button type="button" id="deckPrev" aria-label="Previous card">←</button>
+          <span id="deckCount" aria-live="polite">1 / 4</span>
+          <button type="button" id="deckNext" aria-label="Next card">→</button>
+        </div>
+        <p class="deck-hint">[drag, click, or use ← → to flip]</p>
+      </div>
+    </div>
   </section>
 
 </main>
@@ -385,6 +428,6 @@
 
 
 
-<script src="./app.js?v=26" defer></script>
+<script src="./app.js?v=30" defer></script>
 </body>
 </html>

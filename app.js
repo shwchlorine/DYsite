@@ -60,9 +60,9 @@
     counters.forEach(animate);
   }
 
-  // re-trigger on card hover
+  // re-count whenever a work card comes to the top of the deck
   document.querySelectorAll('.project').forEach(card => {
-    card.addEventListener('mouseenter', () => {
+    card.addEventListener('card:shown', () => {
       const el = card.querySelector('.metric-value');
       if (!el) return;
       delete el.dataset.done;
@@ -70,6 +70,149 @@
       animate(el);
     });
   });
+})();
+
+// ─────────── WORK DECK ───────────
+// The work entries are a stack of trading cards. Drag or click the top card
+// to send it to the back; ← / → (or the buttons / index) flip through.
+(() => {
+  const deck = document.getElementById('deck');
+  if (!deck) return;
+  const cards = [...deck.querySelectorAll('.wcard')];
+  const n = cards.length;
+  if (!n) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = (ms) => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+  const count = document.getElementById('deckCount');
+  const index = document.getElementById('deckIndex');
+  let order = cards.map((_, i) => i); // order[0] is the top card
+  let busy = false;
+
+  // index list built from the cards themselves
+  const indexButtons = cards.map((c, i) => {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button';
+    const num = document.createElement('span'); num.className = 'n'; num.textContent = String(i + 1).padStart(2, '0');
+    const t = document.createElement('span'); t.className = 't'; t.textContent = c.querySelector('h2').textContent;
+    const y = document.createElement('span'); y.className = 'y'; y.textContent = c.querySelector('.proj-year').textContent;
+    b.append(num, t, y);
+    b.addEventListener('click', () => goTo(i));
+    li.append(b);
+    index?.append(li);
+    return b;
+  });
+
+  function slot(p) {
+    if (p === 0) return 'translate(0px, 0px) rotate(0deg) scale(1)';
+    const rot = (p % 2 ? 2.6 : -2.2) * Math.min(p, 2);
+    return `translate(${p * 12}px, ${p * 11}px) rotate(${rot}deg) scale(${(1 - p * 0.035).toFixed(3)})`;
+  }
+  function layout() {
+    order.forEach((ci, p) => {
+      const c = cards[ci];
+      c.style.zIndex = String(n - p);
+      c.style.transform = slot(p);
+      const top = p === 0;
+      c.classList.toggle('is-top', top);
+      c.setAttribute('aria-hidden', top ? 'false' : 'true');
+      c.inert = !top;
+    });
+    const topI = order[0];
+    if (count) count.textContent = `${topI + 1} / ${n}`;
+    indexButtons.forEach((b, i) => b.setAttribute('aria-current', i === topI ? 'true' : 'false'));
+  }
+  function shown() { cards[order[0]].dispatchEvent(new Event('card:shown')); }
+
+  async function next(side = -1) {
+    if (busy) return;
+    busy = true;
+    const top = cards[order[0]];
+    if (!reduce) {
+      top.classList.remove('dragging');
+      top.classList.add('flying');
+      top.style.transform = `translate(${side * 115}%, -4%) rotate(${side * 16}deg)`;
+      await wait(270);
+      top.classList.remove('flying');
+    }
+    order.push(order.shift()); // tucks under the stack on its way back
+    layout();
+    shown();
+    await wait(300);
+    busy = false;
+  }
+  async function prev() {
+    if (busy) return;
+    busy = true;
+    const ci = order.pop();
+    order.unshift(ci);
+    const c = cards[ci];
+    if (!reduce) {
+      c.classList.add('no-anim');
+      c.style.zIndex = String(n + 1);
+      c.style.transform = 'translate(-115%, -4%) rotate(-16deg)';
+      void c.offsetWidth;
+      c.classList.remove('no-anim');
+    }
+    layout();
+    shown();
+    await wait(420);
+    busy = false;
+  }
+  function goTo(i) {
+    if (busy || order[0] === i) return;
+    while (order[0] !== i) order.push(order.shift());
+    layout();
+    shown();
+  }
+
+  // ── drag / click the top card ──
+  let drag = null;
+  deck.addEventListener('pointerdown', (e) => {
+    const top = cards[order[0]];
+    if (busy || e.button !== 0 || !top.contains(e.target) || e.target.closest('a')) return;
+    drag = { x: e.clientX, y: e.clientY, dx: 0, dy: 0, t: performance.now(), moved: 0, id: e.pointerId, card: top };
+    top.setPointerCapture(e.pointerId);
+    top.classList.add('dragging');
+  });
+  deck.addEventListener('pointermove', (e) => {
+    const top = cards[order[0]];
+    if (drag && e.pointerId === drag.id) {
+      drag.dx = e.clientX - drag.x;
+      drag.dy = e.clientY - drag.y;
+      drag.moved = Math.max(drag.moved, Math.hypot(drag.dx, drag.dy));
+      drag.card.style.transform = `translate(${drag.dx}px, ${drag.dy * 0.35}px) rotate(${drag.dx * 0.06}deg)`;
+      return;
+    }
+    // foil follows the pointer on the top card
+    if (top.contains(e.target)) {
+      const r = top.getBoundingClientRect();
+      top.style.setProperty('--lx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
+      top.style.setProperty('--ly', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
+    }
+  });
+  const endDrag = (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const { dx, moved, t, card } = drag;
+    drag = null;
+    try { card.releasePointerCapture(e.pointerId); } catch (_) {}
+    const speed = Math.abs(dx) / Math.max(1, performance.now() - t);
+    if (e.type === 'pointerup' && moved < 6) { next(-1); return; }          // a click flips
+    if (Math.abs(dx) > 90 || (Math.abs(dx) > 30 && speed > 0.6)) { next(Math.sign(dx) || -1); return; }
+    card.classList.remove('dragging');
+    layout();                                                                // snap back
+  };
+  deck.addEventListener('pointerup', endDrag);
+  deck.addEventListener('pointercancel', endDrag);
+
+  deck.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); next(-1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  });
+  document.getElementById('deckNext')?.addEventListener('click', () => next(-1));
+  document.getElementById('deckPrev')?.addEventListener('click', () => prev());
+
+  layout();
 })();
 
 // ESC to close dialog
