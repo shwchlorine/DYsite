@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./styles.css?v=30" />
+<link rel="stylesheet" href="./styles.css?v=37" />
 <link rel="icon" href="./favicon.ico" />
 </head>
 <body>
@@ -230,108 +230,201 @@
       <div class="deck" id="deck" tabindex="0" role="group" aria-roledescription="card deck" aria-label="Selected work. Press the left and right arrow keys to flip through the cards.">
       <article class="project wcard wc-alchemy" data-i="0">
         <div class="wc-face">
+          <div class="wc-scene" aria-hidden="true">
+            <svg viewBox="0 0 300 420" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="alSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#150f3a"/><stop offset=".45" stop-color="#2a1d6b"/><stop offset=".7" stop-color="#5b3aa0"/><stop offset="1" stop-color="#7a4bb3"/></linearGradient>
+                <radialGradient id="alMoon"><stop offset="0" stop-color="#fff6fb"/><stop offset=".35" stop-color="#e9d8ff" stop-opacity=".7"/><stop offset="1" stop-color="#b98cff" stop-opacity="0"/></radialGradient>
+                <linearGradient id="alGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1440"/><stop offset="1" stop-color="#0e0a24"/></linearGradient>
+              </defs>
+              <rect width="300" height="420" fill="url(#alSky)"/>
+              <g fill="#fff"><circle cx="30" cy="40" r=".9"/><circle cx="70" cy="96" r=".7"/><circle cx="120" cy="30" r="1"/><circle cx="160" cy="70" r=".6"/><circle cx="270" cy="170" r=".8"/><circle cx="40" cy="150" r=".6"/><circle cx="286" cy="36" r=".7"/><circle cx="104" cy="160" r=".7"/></g>
+              <circle cx="226" cy="84" r="72" fill="url(#alMoon)"/>
+              <circle cx="226" cy="84" r="24" fill="#fff5fb"/>
+              <g fill="#6d52bf" opacity=".45"><path d="M-12 190 q26 -24 58 -8 q16 -22 44 -8 q28 -8 38 16 z"/><path d="M170 170 q22 -18 48 -4 q18 -18 42 -2 q24 -4 52 14 z"/></g>
+              <path fill="#3b2c86" d="M0 312V250h18v-22h14v30h20v-48h10v-16h6v16h10v40h24v-30h16v44h22v-64h8v-10h6v10h8v70h20v-36h18v26h22v-52h16v60h20v-30h12v68z"/>
+              <path fill="#1c163f" d="M0 336V282h26v-18h18v36h14v-60h22v64h16v-28h20v44h14v-82l8-14 8 14v84h18v-40h24v30h18v-56h22v70h16v-24h16v78z"/>
+              <g fill="#ffd38c">
+                <rect x="66" y="252" width="3" height="4"/><rect x="72" y="262" width="3" height="4"/><rect x="66" y="274" width="3" height="4"/><rect x="160" y="236" width="3" height="4"/><rect x="166" y="250" width="3" height="4"/><rect x="160" y="266" width="3" height="4"/><rect x="166" y="282" width="3" height="4"/><rect x="226" y="262" width="3" height="4"/><rect x="232" y="276" width="3" height="4"/><rect x="30" y="286" width="3" height="4"/><rect x="118" y="292" width="3" height="4"/><rect x="264" y="290" width="3" height="4"/><rect x="92" y="300" width="3" height="4"/>
+              </g>
+              <rect y="330" width="300" height="90" fill="url(#alGround)"/>
+            </svg>
+          </div>
+          <div class="wc-subject"><img src="./logos/alchemy.svg" alt="Alchemy logo" width="75" height="74" draggable="false" /></div>
           <header class="wc-head">
-            <span class="proj-year wc-stage">2024 → Now</span>
+            <span class="wc-stage">STAGE 3</span>
             <h2>Alchemy</h2>
             <span class="wc-energy" aria-hidden="true"></span>
           </header>
-          <div class="wc-art"><img class="wc-logo" src="./logos/alchemy.svg" alt="Alchemy logo" width="75" height="74" draggable="false" /></div>
-          <p class="proj-role wc-strip">AI GTM Lead · SDR Manager · SDR</p>
-          <div class="wc-move">
-            <p class="wc-move-title">
-              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="metric-label">pipeline generated</span>
-              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="10">0</span><span class="metric-suffix">M+</span></span>
-            </p>
-            <p class="proj-desc">Crypto infrastructure platform. Engineered a fully autonomous SDR bot spanning outbound, reply, and analytics. Leading the AI-for-GTM strategy across the company and running the SDR team at 115% quota for three straight quarters.</p>
+          <p class="wc-evolves">
+            <span class="wc-prev" aria-hidden="true"><img class="wide" src="./logos/bingx.svg" alt="" draggable="false" /></span>
+            <span><span class="proj-year">2024 → Now</span> · Evolves from BingX Exchange</span>
+          </p>
+          <div class="wc-body">
+            <div class="wc-move">
+              <p class="wc-move-title">
+                <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="metric-label">pipeline generated</span>
+                <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="10">0</span><span class="metric-suffix">M+</span></span>
+              </p>
+              <p class="wc-blurb">Built a fully autonomous SDR bot; runs the SDR team at 115% quota.</p>
+              <p class="proj-desc">Crypto infrastructure platform. Engineered a fully autonomous SDR bot spanning outbound, reply, and analytics. Leading the AI-for-GTM strategy across the company and running the SDR team at 115% quota for three straight quarters.</p>
+            </div>
+            <p class="wc-stats"><span class="k">role</span><span class="proj-role">AI GTM Lead · SDR Manager · SDR</span></p>
+            <ul class="proj-chips"><li>Hyperliquid</li><li>Monad</li><li>Phantom</li><li>Bank of America</li><li>Franklin Templeton</li></ul>
+            <footer class="wc-foot">
+              <span>Illus. Derrick Yen</span>
+              <a class="wc-link" href="https://www.alchemy.com" target="_blank" rel="noopener">alchemy.com ↗</a>
+              <span class="wc-num">01/04 ✦</span>
+            </footer>
           </div>
-          <ul class="proj-chips"><li>Hyperliquid</li><li>Monad</li><li>Phantom</li><li>Bank of America</li><li>Franklin Templeton</li></ul>
-          <footer class="wc-foot">
-            <span>Illus. Derrick Yen</span>
-            <a class="wc-link" href="https://www.alchemy.com" target="_blank" rel="noopener">alchemy.com ↗</a>
-            <span class="wc-num">01/04 ✦</span>
-          </footer>
           <div class="wc-holo" aria-hidden="true"></div>
           <div class="wc-glare" aria-hidden="true"></div>
         </div>
       </article>
       <article class="project wcard wc-digiworld" data-i="1">
         <div class="wc-face">
+          <div class="wc-scene" aria-hidden="true">
+            <img class="wc-photo" src="./logos/digiworld.jpg" alt="Digiworld logo on a glowing card" width="720" height="456" draggable="false" />
+          </div>
           <header class="wc-head">
-            <span class="proj-year wc-stage">2022 → 2024</span>
+            <span class="wc-stage">STAGE 1</span>
             <h2>Digiworld</h2>
             <span class="wc-energy" aria-hidden="true"></span>
           </header>
-          <div class="wc-art"><img class="wc-photo" src="./logos/digiworld.jpg" alt="Digiworld logo on a glowing card" width="720" height="456" draggable="false" /></div>
-          <p class="proj-role wc-strip">Co-Founder · Managing Partner</p>
-          <div class="wc-move">
-            <p class="wc-move-title">
-              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="metric-label">membership revenue</span>
-              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M/mo</span></span>
-            </p>
-            <p class="proj-desc">Private Web3 members' consortium. Built the drop mechanic, the community engine, and the alpha desk that generated $2.5M+ in member earnings. Ran an 800-person waitlist, an NFT that sold out at 1.1 ETH in a day, and a 10K social community.</p>
+          <p class="wc-evolves">
+            <span class="wc-prev" aria-hidden="true"><img src="./logos/wonghaus.png" alt="" draggable="false" /></span>
+            <span><span class="proj-year">2022 → 2024</span> · Evolves from Wonghaus Ventures</span>
+          </p>
+          <div class="wc-body">
+            <div class="wc-move">
+              <p class="wc-move-title">
+                <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="metric-label">membership revenue</span>
+                <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M/mo</span></span>
+              </p>
+              <p class="wc-blurb">Co-founded a private Web3 consortium: sold-out NFT, $2.5M+ member earnings.</p>
+              <p class="proj-desc">Private Web3 members' consortium. Built the drop mechanic, the community engine, and the alpha desk that generated $2.5M+ in member earnings. Ran an 800-person waitlist, an NFT that sold out at 1.1 ETH in a day, and a 10K social community.</p>
+            </div>
+            <p class="wc-stats"><span class="k">role</span><span class="proj-role">Co-Founder · Managing Partner</span></p>
+            <ul class="proj-chips"><li>Whop</li><li>NFT</li><li>Community</li><li>Discord</li><li>Alpha</li></ul>
+            <footer class="wc-foot">
+              <span>Illus. Derrick Yen</span>
+              
+              <span class="wc-num">02/04 ✦</span>
+            </footer>
           </div>
-          <ul class="proj-chips"><li>Whop</li><li>NFT</li><li>Community</li><li>Discord</li><li>Alpha</li></ul>
-          <footer class="wc-foot">
-            <span>Illus. Derrick Yen</span>
-            
-            <span class="wc-num">02/04 ✦</span>
-          </footer>
           <div class="wc-holo" aria-hidden="true"></div>
           <div class="wc-glare" aria-hidden="true"></div>
         </div>
       </article>
       <article class="project wcard wc-bingx" data-i="2">
         <div class="wc-face">
+          <div class="wc-scene" aria-hidden="true">
+            <svg viewBox="0 0 300 420" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="bxSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#130e36"/><stop offset=".5" stop-color="#2b1d68"/><stop offset="1" stop-color="#6a3fa3"/></linearGradient>
+                <radialGradient id="bxSun"><stop offset="0" stop-color="#ffd6f1"/><stop offset=".4" stop-color="#e58ad6" stop-opacity=".55"/><stop offset="1" stop-color="#b465d8" stop-opacity="0"/></radialGradient>
+                <filter id="bxGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <rect width="300" height="420" fill="url(#bxSky)"/>
+              <g fill="#fff"><circle cx="24" cy="50" r=".8"/><circle cx="96" cy="26" r="1"/><circle cx="210" cy="60" r=".7"/><circle cx="270" cy="30" r=".9"/><circle cx="150" cy="100" r=".6"/><circle cx="40" cy="120" r=".6"/></g>
+              <circle cx="78" cy="196" r="80" fill="url(#bxSun)"/>
+              <circle cx="78" cy="196" r="24" fill="#ffe7f6" opacity=".9"/>
+              <path fill="#3a2b86" d="M0 300l30-50 25 20 30-60 25 25 30-55 30 35 30-55 30 30 30-50 20 26V420H0z"/>
+              <polyline points="0,300 30,250 55,270 85,210 110,235 140,180 170,215 200,160 230,190 260,140 300,120" fill="none" stroke="#ff7fd4" stroke-width="2.6" stroke-linejoin="round" filter="url(#bxGlow)"/>
+              <g fill="#fff"><circle cx="140" cy="180" r="2.6"/><circle cx="200" cy="160" r="2.6"/><circle cx="260" cy="140" r="2.6"/><circle cx="300" cy="120" r="3"/></g>
+              <path fill="#1f1848" d="M0 332l40-40 30 15 30-35 35 30 30-38 35 30 40-42 30 30 30-20V420H0z"/>
+              <g stroke="#c9b6ff" stroke-width="1.2" opacity=".7"><line x1="44" y1="336" x2="44" y2="366"/><line x1="70" y1="330" x2="70" y2="356"/><line x1="96" y1="340" x2="96" y2="372"/><line x1="206" y1="330" x2="206" y2="360"/><line x1="232" y1="322" x2="232" y2="352"/><line x1="258" y1="316" x2="258" y2="348"/></g>
+              <g filter="url(#bxGlow)"><rect x="40" y="342" width="8" height="16" fill="#ff7fd4"/><rect x="66" y="336" width="8" height="12" fill="#9d86ff"/><rect x="92" y="346" width="8" height="18" fill="#ff7fd4"/><rect x="202" y="336" width="8" height="16" fill="#9d86ff"/><rect x="228" y="328" width="8" height="16" fill="#ff7fd4"/><rect x="254" y="322" width="8" height="18" fill="#ff7fd4"/></g>
+              <rect y="368" width="300" height="52" fill="#100b27"/>
+            </svg>
+          </div>
+          <div class="wc-subject"><img class="wide glow" src="./logos/bingx.svg" alt="BingX logo" width="76" height="24" draggable="false" /></div>
           <header class="wc-head">
-            <span class="proj-year wc-stage">2023 → 2024</span>
+            <span class="wc-stage">STAGE 2</span>
             <h2>BingX Exchange</h2>
             <span class="wc-energy" aria-hidden="true"></span>
           </header>
-          <div class="wc-art"><img class="wc-logo wide" src="./logos/bingx.svg" alt="BingX logo" width="76" height="24" draggable="false" /></div>
-          <p class="proj-role wc-strip">Business Development Manager</p>
-          <div class="wc-move">
-            <p class="wc-move-title">
-              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="metric-label">volume onboarded</span>
-              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="100">0</span><span class="metric-suffix">M+/mo</span></span>
-            </p>
-            <p class="proj-desc">Onboarded and oversaw $1M+ portfolios that compounded into $100M+ monthly volume. Kept a 100% client retention rate, beat sales targets by 50%, and built the reporting cadence that shifted 40% of the desk's decisions.</p>
+          <p class="wc-evolves">
+            <span class="wc-prev" aria-hidden="true"><img class="photo" src="./logos/digiworld.jpg" alt="" draggable="false" /></span>
+            <span><span class="proj-year">2023 → 2024</span> · Evolves from Digiworld</span>
+          </p>
+          <div class="wc-body">
+            <div class="wc-move">
+              <p class="wc-move-title">
+                <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="metric-label">volume onboarded</span>
+                <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="100">0</span><span class="metric-suffix">M+/mo</span></span>
+              </p>
+              <p class="wc-blurb">Grew $1M+ portfolios into $100M+ monthly volume with 100% client retention.</p>
+              <p class="proj-desc">Onboarded and oversaw $1M+ portfolios that compounded into $100M+ monthly volume. Kept a 100% client retention rate, beat sales targets by 50%, and built the reporting cadence that shifted 40% of the desk's decisions.</p>
+            </div>
+            <p class="wc-stats"><span class="k">role</span><span class="proj-role">Business Development Manager</span></p>
+            <ul class="proj-chips"><li>Exchange BD</li><li>Whale accounts</li><li>Retention</li></ul>
+            <footer class="wc-foot">
+              <span>Illus. Derrick Yen</span>
+              
+              <span class="wc-num">03/04 ✦</span>
+            </footer>
           </div>
-          <ul class="proj-chips"><li>Exchange BD</li><li>Whale accounts</li><li>Retention</li></ul>
-          <footer class="wc-foot">
-            <span>Illus. Derrick Yen</span>
-            
-            <span class="wc-num">03/04 ✦</span>
-          </footer>
           <div class="wc-holo" aria-hidden="true"></div>
           <div class="wc-glare" aria-hidden="true"></div>
         </div>
       </article>
       <article class="project wcard wc-wonghaus" data-i="3">
         <div class="wc-face">
+          <div class="wc-scene" aria-hidden="true">
+            <svg viewBox="0 0 300 420" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="whSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17113e"/><stop offset=".5" stop-color="#2e2070"/><stop offset="1" stop-color="#6b45a8"/></linearGradient>
+                <radialGradient id="whSun"><stop offset="0" stop-color="#ffe9d6"/><stop offset=".35" stop-color="#f3b6d9" stop-opacity=".55"/><stop offset="1" stop-color="#b98cff" stop-opacity="0"/></radialGradient>
+                <symbol id="whHouse" viewBox="0 0 12 14"><path d="M0 5.5L6 0l6 5.5V14H8V9H4v5H0z"/></symbol>
+              </defs>
+              <rect width="300" height="420" fill="url(#whSky)"/>
+              <g fill="#fff"><circle cx="30" cy="36" r=".9"/><circle cx="84" cy="80" r=".6"/><circle cx="130" cy="24" r="1"/><circle cx="200" cy="54" r=".7"/><circle cx="262" cy="100" r=".8"/><circle cx="50" cy="130" r=".6"/><circle cx="240" cy="20" r=".7"/><circle cx="170" cy="120" r=".6"/></g>
+              <g transform="translate(0 -52)">
+              <circle cx="150" cy="262" r="100" fill="url(#whSun)"/>
+              <path fill="#3d2f88" d="M0 286Q75 244 150 266T300 254V420H0z"/>
+              <path fill="#2a2066" d="M0 324Q90 284 170 308T300 298V420H0z"/>
+              <path fill="#1a1442" d="M0 362Q100 332 190 352T300 348V420H0z"/>
+              <g fill="#0e0a22">
+                <use href="#whHouse" x="40" y="262" width="11" height="13"/><use href="#whHouse" x="232" y="244" width="10" height="12"/>
+                <use href="#whHouse" x="96" y="292" width="13" height="15"/><use href="#whHouse" x="196" y="290" width="12" height="14"/>
+                <use href="#whHouse" x="24" y="336" width="15" height="17"/><use href="#whHouse" x="150" y="336" width="16" height="18"/><use href="#whHouse" x="256" y="330" width="14" height="16"/>
+              </g>
+              <g fill="#ffd38c"><rect x="43.5" y="270" width="2.2" height="2.2"/><rect x="100" y="301" width="2.6" height="2.6"/><rect x="29" y="346" width="3" height="3"/><rect x="155" y="347" width="3" height="3"/><rect x="261" y="340" width="3" height="3"/><rect x="200" y="298" width="2.4" height="2.4"/><rect x="235" y="251" width="2" height="2"/></g>
+              <rect y="410" width="300" height="70" fill="#1a1442"/>
+              </g>
+            </svg>
+          </div>
+          <div class="wc-subject"><img class="glow" src="./logos/wonghaus.png" alt="Wonghaus Ventures logo" width="405" height="399" draggable="false" /></div>
           <header class="wc-head">
-            <span class="proj-year wc-stage">2021</span>
+            <span class="wc-stage">BASIC</span>
             <h2>Wonghaus Ventures</h2>
             <span class="wc-energy" aria-hidden="true"></span>
           </header>
-          <div class="wc-art"><img class="wc-logo" src="./logos/wonghaus.png" alt="Wonghaus Ventures logo" width="405" height="399" draggable="false" /></div>
-          <p class="proj-role wc-strip">Project Manager · Partnerships & Digital Strategy</p>
-          <div class="wc-move">
-            <p class="wc-move-title">
-              <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="metric-label">affiliate revenue</span>
-              <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M</span></span>
-            </p>
-            <p class="proj-desc">Ran partnerships and digital strategy for a DTC growth studio. Generated $1M in affiliate revenue across 30+ vendor contracts, wrote a 150-module founder playbook that hit $100K in its first 30-day launch, and grew sales 15% by rebuilding the digital stack.</p>
+          <p class="wc-evolves">
+            <span><span class="proj-year">2021</span></span>
+          </p>
+          <div class="wc-body">
+            <div class="wc-move">
+              <p class="wc-move-title">
+                <span class="wc-cost" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="metric-label">affiliate revenue</span>
+                <span class="metric-num"><span class="metric-prefix">$</span><span class="metric-value" data-target="1">0</span><span class="metric-suffix">M</span></span>
+              </p>
+              <p class="wc-blurb">Drove $1M in affiliate revenue across 30+ vendor partnerships.</p>
+              <p class="proj-desc">Ran partnerships and digital strategy for a DTC growth studio. Generated $1M in affiliate revenue across 30+ vendor contracts, wrote a 150-module founder playbook that hit $100K in its first 30-day launch, and grew sales 15% by rebuilding the digital stack.</p>
+            </div>
+            <p class="wc-stats"><span class="k">role</span><span class="proj-role">Project Manager · Partnerships & Digital Strategy</span></p>
+            <ul class="proj-chips"><li>DTC</li><li>Affiliate</li><li>Playbooks</li></ul>
+            <footer class="wc-foot">
+              <span>Illus. Derrick Yen</span>
+              
+              <span class="wc-num">04/04 ✦</span>
+            </footer>
           </div>
-          <ul class="proj-chips"><li>DTC</li><li>Affiliate</li><li>Playbooks</li></ul>
-          <footer class="wc-foot">
-            <span>Illus. Derrick Yen</span>
-            
-            <span class="wc-num">04/04 ✦</span>
-          </footer>
           <div class="wc-holo" aria-hidden="true"></div>
           <div class="wc-glare" aria-hidden="true"></div>
         </div>
@@ -428,6 +521,6 @@
 
 
 
-<script src="./app.js?v=30" defer></script>
+<script src="./app.js?v=37" defer></script>
 </body>
 </html>
