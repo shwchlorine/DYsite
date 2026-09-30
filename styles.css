@@ -664,7 +664,7 @@ footer h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
 footer p {
   font-family: var(--serif);
   font-size: clamp(1.15rem, 1.6vw, 1.4rem);
-  line-height: 1.6;
+  line-height: 1.95;
   margin: 0;
   max-width: 780px;
   color: var(--fg);
@@ -673,19 +673,19 @@ footer p {
 .social { text-decoration: none; }
 .social-pill {
   display: inline-block;
-  padding: 2px 12px;
+  padding: 0 0.6em;
+  margin: 0 0.1em;
   border-radius: 999px;
   font-family: var(--sans);
-  font-size: 0.85em;
+  font-size: 0.8em;
   font-weight: 500;
-  vertical-align: baseline;
+  line-height: 1.55;
+  vertical-align: 0.08em;
   transition: transform 0.2s ease;
   color: #fff;
 }
 .social:hover .social-pill { transform: translateY(-2px) rotate(-2deg); }
-.linkedin { background: #0a66c2; }
-.twitter { background: #000; }
-.github { background: #24292e; }
+.linkedin, .twitter, .github { background: #000; }
 .email { background: var(--accent); }
 
 /* Marquee */
