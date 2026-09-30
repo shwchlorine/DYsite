@@ -268,6 +268,11 @@ document.addEventListener('keydown', e => {
     } else if (state !== 'open') {
       av *= Math.exp(-0.4 * dt);
     }
+    if (state === 'open') {
+      // snap upright before the lid lifts, whatever angle it was clicked at
+      a = wrap(a) * Math.exp(-22 * dt);
+      av = 0;
+    }
     a += av * dt;
     squash *= Math.exp(-14 * dt);
 
@@ -516,6 +521,7 @@ document.addEventListener('keydown', e => {
     dlg.classList.add('arena-in');
     await wait(700);
     if (my !== session) return;
+    foe.classList.add('lit');
     await say('A wild QUOTA appeared!');
     if (my !== session) return;
     await type('Go! DERRICK!');
@@ -561,11 +567,12 @@ document.addEventListener('keydown', e => {
       await wait(650);
       await say('QUOTA fainted!');
       await say('DERRICK gained EXP. Points!');
-      foe.classList.remove('faint', 'hit');
+      foe.classList.remove('faint', 'hit', 'lit');
       used.clear();
       movesEl.querySelectorAll('button').forEach(b => b.classList.remove('used'));
       setHp(100);
       await wait(300);
+      foe.classList.add('lit');
       await say('Another QUOTA appeared!');
     }
     busy = false;

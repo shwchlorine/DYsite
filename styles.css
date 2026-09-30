@@ -881,15 +881,27 @@ dialog h3 {
 
 .bt-foe {
   position: absolute;
-  right: 13%;
-  top: 7%;
-  width: 22%;
+  right: 12%;
+  top: 2%;
+  width: 20%;
   aspect-ratio: 1;
   transform-origin: 50% 100%;
 }
-.bt-foe svg { width: 100%; height: 100%; display: block; animation: bob 1.6s ease-in-out infinite; }
-@keyframes bob { 50% { transform: translateY(3%); } }
-
+/* 48×48 pixel sprite scaled up crisp; idles with a stepped one-pixel bob */
+.bt-foe img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -webkit-user-drag: none;
+  animation: pxbob 1.1s steps(1, end) infinite;
+  filter: brightness(0);
+  transition: filter 0.45s steps(3, end);
+}
+/* enters as a silhouette, then snaps into colour */
+.bt-foe.lit img { filter: none; }
+@keyframes pxbob { 50% { transform: translateY(2.083%); } }
 .bt-me {
   position: absolute;
   left: 10%;
@@ -977,7 +989,7 @@ dialog h3 {
 .bt-hpnum { justify-self: end; font-weight: 600; font-size: 0.95em; letter-spacing: 0.05em; }
 
 /* hit effects */
-.bt-foe.hit svg { animation: blink 0.5s steps(2, jump-none) 2, bob 1.6s ease-in-out infinite; }
+.bt-foe.hit img { animation: blink 0.5s steps(2, jump-none) 2, pxbob 1.1s steps(1, end) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .bt-foe.shake { animation: shake 0.4s ease-in-out; }
 @keyframes shake { 20% { transform: translateX(-6%); } 40% { transform: translateX(6%); } 60% { transform: translateX(-4%); } 80% { transform: translateX(3%); } }
@@ -1237,5 +1249,5 @@ dialog h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .battle.enter .bt-wipe { animation: none; }
-  .bt-foe svg { animation: none; }
+  .bt-foe img { animation: none; transition: none; }
 }
