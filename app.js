@@ -1,24 +1,3 @@
-// Custom cursor
-(() => {
-  const cursor = document.getElementById('cursor');
-  if (!cursor || matchMedia('(hover: none)').matches) return;
-  let x = 0, y = 0, tx = 0, ty = 0;
-  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; document.body.classList.add('cursor-ready'); });
-  function tick() {
-    x += (tx - x) * 0.25;
-    y += (ty - y) * 0.25;
-    cursor.style.left = x + 'px';
-    cursor.style.top = y + 'px';
-    requestAnimationFrame(tick);
-  }
-  tick();
-  const hoverSel = 'a, button, .project, .tenets li';
-  document.querySelectorAll(hoverSel).forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-})();
-
 // Rotating intro tagline
 (() => {
   const words = document.querySelectorAll('.rot-word');
@@ -105,10 +84,13 @@ function initDeck(wrap) {
     return b;
   }) : [];
 
+  // A neat, straight stack; hovering the deck fans the cards out behind the top one.
+  let fanned = false;
   function slot(p) {
-    if (p === 0) return 'translate(0px, 0px) rotate(0deg) scale(1)';
-    const rot = (p % 2 ? 2.6 : -2.2) * Math.min(p, 2);
-    return `translate(${p * 12}px, ${p * 11}px) rotate(${rot}deg) scale(${(1 - p * 0.035).toFixed(3)})`;
+    if (p === 0) return fanned ? 'translate(0px, -6px) rotate(-1deg) scale(1)' : 'translate(0px, 0px) rotate(0deg) scale(1)';
+    if (!fanned) return `translate(${p * 5}px, ${p * 6}px) rotate(0deg) scale(${(1 - p * 0.02).toFixed(3)})`;
+    const rot = (p % 2 ? 4.5 : -3.5) * Math.min(p, 2);
+    return `translate(${p * 16}px, ${p * 8}px) rotate(${rot}deg) scale(${(1 - p * 0.035).toFixed(3)})`;
   }
   function layout() {
     order.forEach((ci, p) => {
@@ -207,6 +189,17 @@ function initDeck(wrap) {
   };
   deck.addEventListener('pointerup', endDrag);
   deck.addEventListener('pointercancel', endDrag);
+
+  deck.addEventListener('pointerenter', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    fanned = true;
+    if (!drag && !busy) layout();
+  });
+  deck.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    fanned = false;
+    if (!drag && !busy) layout();
+  });
 
   deck.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') { e.preventDefault(); next(-1); }
