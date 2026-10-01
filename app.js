@@ -1,13 +1,39 @@
-// Rotating intro tagline
+// Typed intro tagline: delete the phrase, type the next. The paragraph keeps
+// the height of its tallest phrase at this width so the layout never jumps.
 (() => {
-  const words = document.querySelectorAll('.rot-word');
-  if (words.length < 2) return;
-  let i = 0;
-  setInterval(() => {
-    words[i].removeAttribute('data-active');
-    i = (i + 1) % words.length;
-    words[i].setAttribute('data-active', '');
-  }, 3200);
+  const intro = document.querySelector('.intro');
+  const typed = intro && intro.querySelector('.rot-type');
+  if (!typed) return;
+  const phrases = [...intro.querySelectorAll('.rot-word')].map(w => w.textContent.trim());
+  if (phrases.length < 2) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function reserve() {
+    const current = typed.textContent;
+    intro.style.minHeight = '';
+    let tallest = 0;
+    for (const p of phrases) { typed.textContent = p; tallest = Math.max(tallest, intro.offsetHeight); }
+    typed.textContent = current;
+    intro.style.minHeight = `${tallest}px`;
+  }
+  reserve();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(reserve, 120); });
+
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+  (async () => {
+    let i = 0;
+    for (;;) {
+      await wait(2600);
+      const next = phrases[(i + 1) % phrases.length];
+      if (reduce) { typed.textContent = next; i++; continue; }
+      for (let t = typed.textContent; t.length; ) { t = t.slice(0, -1); typed.textContent = t; await wait(22); }
+      await wait(260);
+      for (let k = 1; k <= next.length; k++) { typed.textContent = next.slice(0, k); await wait(48); }
+      i++;
+    }
+  })();
 })();
 
 // Count-up metric on card hover / scroll into view

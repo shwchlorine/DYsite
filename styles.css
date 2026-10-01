@@ -99,31 +99,29 @@ main { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
   max-width: 620px;
 }
 
-.rotator {
+/* typed tagline: one line of text that wraps naturally; the paragraph's
+   min-height (set in app.js) is the tallest phrase, so nothing below moves */
+.rotator { display: inline; }
+.rot-word { display: none; }   /* the phrase list, read by app.js */
+.rot-type { color: var(--accent); font-style: italic; font-weight: 500; }
+.rot-caret {
   display: inline-block;
-  position: relative;
-  min-width: 320px;
+  width: 0.07em;
+  height: 0.95em;
+  margin-left: 0.06em;
+  vertical-align: -0.12em;
+  background: var(--accent);
+  animation: caret 1s steps(1, end) infinite;
 }
-.rot-word {
+@keyframes caret { 50% { opacity: 0; } }
+.sr-only {
   position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  color: var(--accent);
-  font-style: italic;
-  font-weight: 500;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
 }
-.rot-word[data-active] {
-  opacity: 1;
-  transform: translateY(0);
-  position: relative;
-}
-@media (max-width: 640px) {
-  .rotator { min-width: 0; display: inline; }
-  .rot-word { white-space: normal; }
 }
 
 .hero .education {
@@ -920,6 +918,7 @@ dialog h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track, .marquee-track { animation: none; }
+  .rot-caret { animation: none; }
   .status-dot { animation: none; }
   * { transition-duration: 0.01s !important; }
 }
