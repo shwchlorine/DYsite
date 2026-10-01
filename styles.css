@@ -1197,20 +1197,33 @@ dialog h3 {
   aspect-ratio: 1;
   transform-origin: 50% 100%;
 }
-/* 48×48 pixel sprite scaled up crisp; idles with a stepped one-pixel bob */
-.bt-foe img {
-  display: block;
+/* 48×48 pixel sprite scaled up crisp; idles with a stepped one-pixel bob.
+   The crackle layer cycles three frames of lightning around his orb. */
+.bt-sprite {
+  position: relative;
   width: 100%;
   height: 100%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  -webkit-user-drag: none;
   animation: pxbob 1.1s steps(1, end) infinite;
   filter: brightness(0);
   transition: filter 0.45s steps(3, end);
 }
+.bt-sprite img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  -webkit-user-drag: none;
+}
+.bt-crackle {
+  position: absolute;
+  inset: 0;
+  background: url("./quota-crackle.png") 0 0 / 300% 100% no-repeat;
+  image-rendering: pixelated;
+  animation: crackle 0.36s steps(3, end) infinite;
+}
+@keyframes crackle { to { background-position: 150% 0; } }
 /* enters as a silhouette, then snaps into colour */
-.bt-foe.lit img { filter: none; }
+.bt-foe.lit .bt-sprite { filter: none; }
 @keyframes pxbob { 50% { transform: translateY(2.083%); } }
 .bt-me {
   position: absolute;
@@ -1299,7 +1312,7 @@ dialog h3 {
 .bt-hpnum { justify-self: end; font-weight: 600; font-size: 0.95em; letter-spacing: 0.05em; }
 
 /* hit effects */
-.bt-foe.hit img { animation: blink 0.5s steps(2, jump-none) 2, pxbob 1.1s steps(1, end) infinite; }
+.bt-foe.hit .bt-sprite { animation: blink 0.5s steps(2, jump-none) 2, pxbob 1.1s steps(1, end) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .bt-foe.shake { animation: shake 0.4s ease-in-out; }
 @keyframes shake { 20% { transform: translateX(-6%); } 40% { transform: translateX(6%); } 60% { transform: translateX(-4%); } 80% { transform: translateX(3%); } }
@@ -1344,7 +1357,7 @@ dialog h3 {
   transform: translate(var(--ax, 0px), var(--ay, 0px)) scale(0.04);
   opacity: 0.2;
 }
-.bt-foe.absorb img {
+.bt-foe.absorb .bt-sprite {
   animation: none;
   transition: none;
   filter: brightness(0) invert(36%) sepia(90%) saturate(4000%) hue-rotate(330deg) brightness(1.05);
@@ -1595,5 +1608,5 @@ dialog h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .battle.enter .bt-wipe { animation: none; }
-  .bt-foe img { animation: none; transition: none; }
+  .bt-sprite, .bt-crackle { animation: none; transition: none; }
 }
