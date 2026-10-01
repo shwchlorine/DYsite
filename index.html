@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./styles.css?v=52" />
+<link rel="stylesheet" href="./styles.css?v=53" />
 <link rel="icon" href="./favicon.ico?v=2" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png?v=2" />
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=2" />
@@ -483,11 +483,11 @@
             <div class="wc-scene" aria-hidden="true">
               <svg viewBox="0 0 300 420" preserveAspectRatio="xMidYMid slice">
                 <defs>
-                  <linearGradient id="asSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0928"/><stop offset=".55" stop-color="#23145b"/><stop offset="1" stop-color="#4b1f79"/></linearGradient>
-                  <linearGradient id="asBeamA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7fd4" stop-opacity=".6"/><stop offset="1" stop-color="#ff7fd4" stop-opacity="0"/></linearGradient>
-                  <linearGradient id="asBeamB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9d86ff" stop-opacity=".6"/><stop offset="1" stop-color="#9d86ff" stop-opacity="0"/></linearGradient>
-                  <radialGradient id="asGlow"><stop offset="0" stop-color="#c9a8ff" stop-opacity=".55"/><stop offset="1" stop-color="#c9a8ff" stop-opacity="0"/></radialGradient>
-                  <linearGradient id="asBar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#9d86ff"/><stop offset="1" stop-color="#ff7fd4"/></linearGradient>
+                  <linearGradient id="asSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050506"/><stop offset=".55" stop-color="#141417"/><stop offset="1" stop-color="#2b2b30"/></linearGradient>
+                  <linearGradient id="asBeamA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+                  <linearGradient id="asBeamB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9c9d0" stop-opacity=".5"/><stop offset="1" stop-color="#c9c9d0" stop-opacity="0"/></linearGradient>
+                  <radialGradient id="asGlow"><stop offset="0" stop-color="#ffffff" stop-opacity=".28"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+                  <linearGradient id="asBar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7d7d86"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
                   <filter id="asSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
                 </defs>
                 <rect width="300" height="420" fill="url(#asSky)"/>
@@ -497,16 +497,16 @@
                 <polygon points="150,0 112,340 188,340" fill="url(#asBeamB)" opacity=".3"/>
                 <circle cx="150" cy="150" r="130" fill="url(#asGlow)"/>
                 <g>
-                  <line x1="150" y1="0" x2="150" y2="12" stroke="#c9b6ff" stroke-width="1"/>
-                  <circle cx="150" cy="22" r="10" fill="#d9ccff"/>
-                  <path d="M140 22h20M150 12v20M142 16h16M142 28h16" stroke="#8f78e6" stroke-width=".8"/>
-                  <circle cx="146" cy="18" r="2.5" fill="#fff" opacity=".9"/>
+                  <line x1="150" y1="58" x2="150" y2="70" stroke="#bdbdc4" stroke-width="1"/>
+                  <circle cx="150" cy="80" r="10" fill="#d8d8de"/>
+                  <path d="M140 80h20M150 70v20M142 74h16M142 86h16" stroke="#8b8b94" stroke-width=".8"/>
+                  <circle cx="146" cy="76" r="2.5" fill="#fff" opacity=".9"/>
                 </g>
                 <g fill="url(#asBar)" filter="url(#asSoft)" opacity=".9">
                   <rect x="30" y="272" width="10" height="36" rx="2"/><rect x="46" y="256" width="10" height="52" rx="2"/><rect x="62" y="284" width="10" height="24" rx="2"/><rect x="78" y="262" width="10" height="46" rx="2"/>
                   <rect x="212" y="266" width="10" height="42" rx="2"/><rect x="228" y="250" width="10" height="58" rx="2"/><rect x="244" y="276" width="10" height="32" rx="2"/><rect x="260" y="260" width="10" height="48" rx="2"/>
                 </g>
-                <g fill="#0b0820">
+                <g fill="#050506">
                   <path d="M-10 420V340q20-14 40-4 18-12 38 0 20-14 42-2 18-10 40 0 20-14 42-2 20-12 40 0 22-14 44-2 16-8 34 4V420z"/>
                   <circle cx="18" cy="330" r="9"/><circle cx="58" cy="326" r="10"/><circle cx="98" cy="332" r="9"/><circle cx="140" cy="324" r="10"/><circle cx="180" cy="330" r="9"/><circle cx="222" cy="326" r="10"/><circle cx="262" cy="332" r="9"/><circle cx="296" cy="328" r="9"/>
                   <path d="M62 318l-8-22 5-2 9 20zM138 316l6-24 5 1-5 24zM226 318l8-22 5 2-9 20z"/>
@@ -698,6 +698,6 @@
 
 
 
-<script src="./app.js?v=52" defer></script>
+<script src="./app.js?v=53" defer></script>
 </body>
 </html>
